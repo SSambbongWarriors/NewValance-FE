@@ -16,7 +16,6 @@ import VideoPage from './src/pages/Video/VideoPage';
 import * as Font from 'expo-font';
 import { ThemeProvider } from 'styled-components';
 import theme from './src/styles/theme';
-import Layout from './src/pages/Layout';
 
 const Stack = createStackNavigator();
 
@@ -39,7 +38,7 @@ const App = () => {
       <NavigationContainer>
         <Stack.Navigator
           initialRouteName="Landing"
-          screenOptions={{ headerShown: false }}
+          screenOptions={{ headerShown: false, animation: 'none' }}
         >
           <Stack.Screen name="Landing" component={LandingPage} />
 
