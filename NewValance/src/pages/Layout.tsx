@@ -2,6 +2,7 @@ import { useRoute } from '@react-navigation/native';
 import { StatusBar, StatusBarStyle, View } from 'react-native';
 import theme from '../styles/theme';
 import { NavBar } from '../components/common/NavBar/NavBar';
+import { Header } from '../components/common/Header/Header';
 
 interface PageConfig {
   header?: boolean;
@@ -44,6 +45,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <View style={{ flex: 1 }}>
       <StatusBar backgroundColor={statusColor} barStyle={barStyle} />
+      {header && <Header />}
       <View style={{ flex: 1 }}>{children}</View>
       {navBar && <NavBar />}
     </View>
