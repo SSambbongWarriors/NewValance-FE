@@ -6,7 +6,7 @@ import LoginPage from './src/pages/Auth/LoginPage';
 import SigninPage from './src/pages/Auth/SigninPage';
 import CategoryPage from './src/pages/Main/CategoryPage';
 import GenrePage from './src/pages/Main/GenrePage';
-import HomePage from './src/pages/Main/HomePage';
+import HomePage from './src/pages/Main/HomePage/HomePage';
 import LikesPage from './src/pages/Main/LikesPage';
 import SearchPage from './src/pages/Main/SearchPage';
 import MyPage from './src/pages/My/MyPage';
