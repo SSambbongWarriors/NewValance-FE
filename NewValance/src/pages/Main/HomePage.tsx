@@ -6,11 +6,7 @@ import Layout from '../Layout';
 const HomePage = () => {
   return (
     <Layout>
-      <View>
-        <CustomText style={[theme.fonts.bold32, theme.colors.red]}>
-          안녕하세용
-        </CustomText>
-      </View>
+      <View></View>
     </Layout>
   );
 };
