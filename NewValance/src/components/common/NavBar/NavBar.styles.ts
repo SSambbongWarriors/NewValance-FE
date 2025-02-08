@@ -11,10 +11,10 @@ export const Wrapper = styled.View`
 export const Container = styled.View`
   width: ${wp(375)}px;
   height: ${hp(64)}px;
-  background-color: ${theme.colors.white.color};
+  background-color: ${theme.colors.white};
 
   margin-top: auto;
-  padding: ${wp(10)}px ${hp(30)}px;
+  padding: ${hp(30)}px;
 
   flex-direction: row;
   justify-content: space-between;

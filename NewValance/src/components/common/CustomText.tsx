@@ -1,13 +1,23 @@
 import React from 'react';
 import { Text, TextProps } from 'react-native';
 
-export const CustomText: React.FC<TextProps> = ({
+interface CustomTextProps extends TextProps {
+  font: {
+    fontFamily: string;
+    fontSize: number;
+    lineHeights: number;
+  };
+  color: string;
+}
+
+export const CustomText: React.FC<CustomTextProps> = ({
   children,
-  style,
+  font,
+  color,
   ...props
 }) => {
   return (
-    <Text style={[style]} {...props}>
+    <Text style={[font, { color: color }]} {...props}>
       {children}
     </Text>
   );

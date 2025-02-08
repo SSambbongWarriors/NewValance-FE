@@ -14,7 +14,7 @@ interface PageConfig {
 const defaultConfig: PageConfig = {
   header: false,
   navBar: false,
-  statusColor: theme.colors.white.color,
+  statusColor: theme.colors.white,
   barStyle: 'dark-content',
 };
 
@@ -24,13 +24,13 @@ const pageConfig: Record<string, PageConfig> = {
   Likes: { header: true, navBar: true },
   Search: {
     navBar: true,
-    statusColor: theme.colors.violet.color,
+    statusColor: theme.colors.violet,
     barStyle: 'light-content',
   },
   Video: { navBar: true },
-  My: { statusColor: theme.colors.violet.color, barStyle: 'light-content' },
-  ProfileEdit: { statusColor: theme.colors.violet_2.color },
-  Signin: { statusColor: theme.colors.violet_2.color },
+  My: { statusColor: theme.colors.violet, barStyle: 'light-content' },
+  ProfileEdit: { statusColor: theme.colors.violet_2 },
+  Signin: { statusColor: theme.colors.violet_2 },
 } as const;
 
 const Layout = ({ children }: { children: React.ReactNode }) => {

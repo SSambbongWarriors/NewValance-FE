@@ -1,16 +1,16 @@
 export const theme = {
   colors: {
-    red: { color: '#BE2623' },
-    violet: { color: '#5739DC' },
-    violet_2: { color: '#F3F1FD' },
-    yellow: { color: '#FFD700' },
-    black_1: { color: '#111111' },
-    black_2: { color: '#303030' },
-    gray_1: { color: '#F1F1F5' },
-    gray_2: { color: '#F7F7FB' },
-    gray_3: { color: '#C9CDD2' },
-    gray_4: { color: '#707070' },
-    white: { color: '#FFFFFF' },
+    red: '#BE2623',
+    violet: '#5739DC',
+    violet_2: '#F3F1FD',
+    yellow: '#FFD700',
+    black_1: '#111111',
+    black_2: '#303030',
+    gray_1: '#F1F1F5',
+    gray_2: '#F7F7FB',
+    gray_3: '#C9CDD2',
+    gray_4: '#707070',
+    white: '#FFFFFF',
   },
   fonts: {
     bold32: {

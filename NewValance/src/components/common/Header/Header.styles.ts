@@ -4,7 +4,7 @@ import theme from '../../../styles/theme';
 
 export const Container = styled.View`
   width: 100%;
-  background-color: ${theme.colors.white.color};
+  background-color: ${theme.colors.white};
   padding: ${hp(11)}px ${wp(16)}px;
 
   flex-direction: row;
@@ -12,7 +12,7 @@ export const Container = styled.View`
   align-items: center;
 
   border-bottom-width: ${wp(0.3)}px;
-  border-bottom-color: ${theme.colors.gray_3.color};
+  border-bottom-color: ${theme.colors.gray_3};
 `;
 
 export const IconContainer = styled.View`
