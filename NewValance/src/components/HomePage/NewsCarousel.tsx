@@ -4,14 +4,10 @@ import * as S from './NewsCarousel.styles';
 import theme from '../../styles/theme';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { FlatList } from 'react-native';
-
-interface CarouselData {
-  title: string;
-  thumbnail: string;
-}
+import { NewsData } from '../../store/interfaces';
 
 interface NewsCarouselProps {
-  data: Array<CarouselData>;
+  data: Array<NewsData>;
 }
 
 export const NewsCarousel = ({ data }: NewsCarouselProps) => {
@@ -27,7 +23,7 @@ export const NewsCarousel = ({ data }: NewsCarouselProps) => {
         snapToOffsets={snapToOffsets}
         decelerationRate="fast"
         windowSize={3}
-        renderItem={({ item }: { item: CarouselData }) => (
+        renderItem={({ item }: { item: NewsData }) => (
           <S.Card>
             <S.Thumbnail
               source={{ uri: item.thumbnail }}
