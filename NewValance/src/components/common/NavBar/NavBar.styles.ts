@@ -5,7 +5,8 @@ import theme from '../../../styles/theme';
 export const Wrapper = styled.View`
   width: 100%;
   height: ${hp(82)}px;
-  position: relative;
+  position: absolute;
+  bottom: 0;
 `;
 
 export const Container = styled.View`
@@ -21,6 +22,8 @@ export const Container = styled.View`
   align-items: center;
 
   border-radius: ${wp(25)}px ${wp(25)}px 0 0;
+  background-color: white;
+  elevation: 4; /* Android 전용 */
 `;
 
 export const NavItem = styled.TouchableOpacity``;

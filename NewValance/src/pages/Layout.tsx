@@ -43,7 +43,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   );
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, position: 'relative' }}>
       <StatusBar backgroundColor={statusColor} barStyle={barStyle} />
       {header && <Header />}
       <View style={{ flex: 1 }}>{children}</View>
