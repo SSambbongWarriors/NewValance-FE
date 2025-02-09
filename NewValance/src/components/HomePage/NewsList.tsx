@@ -22,7 +22,11 @@ export const NewsList = ({ data }: NewsListProps) => {
             <CustomText font={theme.fonts.bold24} color={theme.colors.black_1}>
               {cat.category}
             </CustomText>
-            <ArrowLeft onPress={() => navigate.navigate('Category')} />
+            <ArrowLeft
+              onPress={() =>
+                navigate.navigate('Category', { cat: cat.category })
+              }
+            />
           </S.Header>
           <S.NewsContainer
             horizontal={true}

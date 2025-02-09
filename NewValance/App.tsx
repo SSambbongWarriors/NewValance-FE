@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import LandingPage from './src/pages/LandingPage';
 import LoginPage from './src/pages/Auth/LoginPage';
 import SigninPage from './src/pages/Auth/SigninPage';
-import CategoryPage from './src/pages/Main/CategoryPage';
+import CategoryPage from './src/pages/Main/CategoryPage/CategoryPage';
 import GenrePage from './src/pages/Main/GenrePage';
 import HomePage from './src/pages/Main/HomePage/HomePage';
 import LikesPage from './src/pages/Main/LikesPage';

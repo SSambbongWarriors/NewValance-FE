@@ -20,6 +20,7 @@ const defaultConfig: PageConfig = {
 
 const pageConfig: Record<string, PageConfig> = {
   Home: { header: true, navBar: true },
+  Category: { header: true, navBar: true },
   Genre: { header: true, navBar: true },
   Likes: { header: true, navBar: true },
   Search: {
