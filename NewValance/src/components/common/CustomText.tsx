@@ -8,7 +8,7 @@ interface CustomTextProps extends TextProps {
     fontSize: number;
     lineHeights: number;
   };
-  color: string;
+  color?: string;
 }
 
 export const CustomText: React.FC<CustomTextProps> = ({
