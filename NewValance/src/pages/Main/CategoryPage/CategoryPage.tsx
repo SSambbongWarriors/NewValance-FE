@@ -1,11 +1,9 @@
-import { FlatList, Text, View } from 'react-native';
 import * as S from './CategoryPage.styles';
 import { CustomText } from '../../../components/common/CustomText';
 import theme from '../../../styles/theme';
 import Layout from '../../Layout';
-import { VideoThumbL } from '../../../components/common/VideoThumb/VideoThumb';
-import { NewsData } from '../../../store/interfaces';
-import { hp } from '../../../styles/ResponsiveSize';
+
+import { VerticalVideoList } from '../../../components/common/VideoList/VerticalVideoList';
 
 const dummyData = Array.from({ length: 30 }, (_, i) => ({
   id: i + 1,
@@ -24,19 +22,7 @@ const CategoryPage = ({ route }: any) => {
             {cat}
           </CustomText>
         </S.Header>
-        <S.VideoContainer
-          numColumns={2}
-          columnWrapperStyle={{
-            justifyContent: 'space-between',
-            marginBottom: 18,
-          }}
-          showsVerticalScrollIndicator={false}
-          data={dummyData}
-          keyExtractor={(item: NewsData) => item.id}
-          renderItem={({ item }: { item: NewsData }) => (
-            <VideoThumbL title={item.title} thumbnail={item.thumbnail} />
-          )}
-        />
+        <VerticalVideoList data={dummyData} />
       </S.Container>
     </Layout>
   );

@@ -14,5 +14,3 @@ export const Container = styled.View`
 export const Header = styled.View`
   padding-bottom: 8px;
 `;
-
-export const VideoContainer = styled.FlatList``;
