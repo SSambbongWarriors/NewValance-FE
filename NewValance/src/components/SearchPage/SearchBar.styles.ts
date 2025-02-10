@@ -4,13 +4,13 @@ import { wp } from '../../styles/ResponsiveSize';
 
 export const Container = styled.View`
   width: 100%;
-  padding-top: 4;
-  padding-bottom: 4;
-  padding-left: 12;
-  padding-right: 8;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 12px;
+  padding-right: 8px;
 
-  margin-top: 8;
-  margin-bottom: 8;
+  margin-top: 8px;
+  margin-bottom: 8px;
 
   flex-direction: row;
   align-items: center;

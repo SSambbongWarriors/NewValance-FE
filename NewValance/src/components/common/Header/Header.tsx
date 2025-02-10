@@ -13,7 +13,7 @@ export const Header = () => {
       <LogoIcon onPress={() => navigate.navigate('Home')} />
       <S.IconContainer>
         <SearchIcon onPress={() => navigate.navigate('Search')} />
-        <MenuIcon onPress={() => navigate.navigate('Category')} />
+        <MenuIcon onPress={() => navigate.navigate('Edit')} />
       </S.IconContainer>
     </S.Container>
   );

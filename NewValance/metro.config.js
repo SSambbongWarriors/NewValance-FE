@@ -9,11 +9,11 @@ module.exports = (async () => {
     transformer: {
       ...defaultConfig.transformer,
       babelTransformerPath: require.resolve('react-native-svg-transformer'),
-      assetPlugins: ['expo-asset/tools/hashAssetFiles'],
     },
     resolver: {
-      assetExts: [...assetExts.filter((ext) => ext !== 'svg'), 'otf'], // otf 추가
-      sourceExts: [...sourceExts, 'svg'], // svg 추가
+      assetExts: [...assetExts.filter((ext) => ext !== 'svg'), 'otf'],
+      sourceExts: [...sourceExts, 'svg'],
+      mainFields: ['browser', 'module', 'main'], // 추가
     },
   };
 })();
