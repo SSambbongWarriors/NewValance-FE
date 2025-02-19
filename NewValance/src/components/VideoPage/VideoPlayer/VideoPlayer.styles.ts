@@ -1,13 +1,13 @@
 import styled from 'styled-components/native';
 import { Dimensions } from 'react-native';
 
-import MenuIcon from '../../assets/images/VideoPage/menu.svg';
-import LeftArrowIcon from '../../assets/images/VideoPage/arrow_key_left.svg';
-import HeartIcon from '../../assets/images/VideoPage/favorite.svg';
-import ChatIcon from '../../assets/images/VideoPage/chat.svg';
-import ShareIcon from '../../assets/images/VideoPage/share.svg';
-import LinkIcon from '../../assets/images/VideoPage/arrow_up_right.svg';
-import theme from '../../styles/theme';
+import MenuIcon from '../../../assets/images/VideoPage/menu.svg';
+import LeftArrowIcon from '../../../assets/images/VideoPage/arrow_key_left.svg';
+import HeartIcon from '../../../assets/images/VideoPage/favorite.svg';
+import ChatIcon from '../../../assets/images/VideoPage/chat.svg';
+import ShareIcon from '../../../assets/images/VideoPage/share.svg';
+import LinkIcon from '../../../assets/images/VideoPage/arrow_up_right.svg';
+import theme from '../../../styles/theme';
 
 export const Container = styled.View`
   width: ${Dimensions.get('window').width}px;

@@ -20,7 +20,9 @@
     "expo-linear-gradient": "^14.0.2",
     "expo-notifications": "^0.29.13",
     "expo-permissions": "^14.4.0",
+    "expo-splash-screen": "~0.29.22",
     "expo-status-bar": "~2.0.1",
+    "expo-video": "~2.0.5",
     "react": "18.3.1",
     "react-dom": "^18.3.1",
     "react-native": "0.76.7",
@@ -28,6 +30,7 @@
     "react-native-draglist": "^3.8.2",
     "react-native-gesture-handler": "~2.20.2",
     "react-native-global-props": "^1.1.5",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-reanimated": "^3.16.7",
     "react-native-reanimated-carousel": "^3.5.1",
     "react-native-responsive-dimensions": "^3.1.1",
@@ -38,9 +41,7 @@
     "react-native-webview": "13.12.5",
     "recoil": "^0.7.7",
     "styled-components": "^6.1.14",
-    "undefined": "\\",
-    "expo-video": "~2.0.5",
-    "expo-splash-screen": "~0.29.22"
+    "undefined": "\\"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

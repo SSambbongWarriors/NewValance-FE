@@ -1,11 +1,16 @@
 import { useVideoPlayer, VideoView } from 'expo-video';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import * as S from './VideoPlayer.styles';
 
-import { Pressable } from 'react-native';
-import { CustomText } from '../common/CustomText';
-import theme from '../../styles/theme';
-import { AnimatedIcon } from './AnimatedIcon';
+import { CustomText } from '../../common/CustomText';
+import theme from '../../../styles/theme';
+import { AnimatedIcon } from '../AnimatedIcon';
+import { CommentBox } from '../CommentBox/CommentBox';
+
+import BottomSheet from '../BottomSheet';
+import { TextInput } from 'react-native-gesture-handler';
+import { Button } from '../../common/Button/Button';
+import { KeyboardAvoidingView, Platform } from 'react-native';
 
 interface VideoPlayerProps {
   src: string;
@@ -14,6 +19,7 @@ interface VideoPlayerProps {
 
 export const VideoPlayer = ({ src, isPlaying }: VideoPlayerProps) => {
   const [isPaused, setIsPaused] = useState(!isPlaying);
+  const [isCommentActive, setIsCommentActive] = useState(false);
 
   const player = useVideoPlayer(src, (player) => {
     player.loop = true;
@@ -37,7 +43,10 @@ export const VideoPlayer = ({ src, isPlaying }: VideoPlayerProps) => {
 
   const handleVideoPress = () => {
     setIsPaused((prev) => !prev);
-    console.log('press');
+  };
+
+  const handleCommentActive = () => {
+    setIsCommentActive((prev) => !prev);
   };
 
   return (
@@ -58,7 +67,7 @@ export const VideoPlayer = ({ src, isPlaying }: VideoPlayerProps) => {
       <S.Menu />
       <S.IconContainer>
         <S.Heart />
-        <S.Chat />
+        <S.Chat onPress={handleCommentActive} />
         <S.Share />
       </S.IconContainer>
       <S.InfoContainer>
@@ -79,6 +88,7 @@ export const VideoPlayer = ({ src, isPlaying }: VideoPlayerProps) => {
           <S.Arrow />
         </S.LinkButton>
       </S.InfoContainer>
+      <CommentBox isActive={isCommentActive} setIsActive={setIsCommentActive} />
     </S.Container>
   );
 };

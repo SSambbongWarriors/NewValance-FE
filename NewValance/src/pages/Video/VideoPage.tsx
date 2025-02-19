@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { VideoPlayer } from '../../components/VideoPage/VideoPlayer';
+import { VideoPlayer } from '../../components/VideoPage/VideoPlayer/VideoPlayer';
 import * as S from './VideoPage.styles';
 
 interface VideoData {
@@ -55,6 +55,7 @@ const VideoPage = () => {
         renderItem={({ item, index }: any) => (
           <VideoPlayer src={item.src} isPlaying={index === currentIndex} />
         )}
+        scrollEnabled={true}
         pagingEnabled={true}
         horizontal
         showsHorizontalScrollIndicator={false}
