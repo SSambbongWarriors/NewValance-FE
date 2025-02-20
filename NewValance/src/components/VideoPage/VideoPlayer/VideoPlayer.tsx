@@ -1,5 +1,5 @@
 import { useVideoPlayer, VideoView } from 'expo-video';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import * as S from './VideoPlayer.styles';
 
 import { CustomText } from '../../common/CustomText';
@@ -7,10 +7,9 @@ import theme from '../../../styles/theme';
 import { AnimatedIcon } from '../AnimatedIcon';
 import { CommentBox } from '../CommentBox/CommentBox';
 
-import BottomSheet from '../BottomSheet';
-import { TextInput } from 'react-native-gesture-handler';
-import { Button } from '../../common/Button/Button';
-import { KeyboardAvoidingView, Platform } from 'react-native';
+import { useRecoilState } from 'recoil';
+import { commentState, themeState } from '../../../store/videoState';
+import { ThemeBox } from '../ThemeBox/ThemeBox';
 
 interface VideoPlayerProps {
   src: string;
@@ -19,7 +18,8 @@ interface VideoPlayerProps {
 
 export const VideoPlayer = ({ src, isPlaying }: VideoPlayerProps) => {
   const [isPaused, setIsPaused] = useState(!isPlaying);
-  const [isCommentActive, setIsCommentActive] = useState(false);
+  const [isCommentActive, setIsCommentActive] = useRecoilState(commentState);
+  const [isthemeActive, setIsThemeActive] = useRecoilState(themeState);
 
   const player = useVideoPlayer(src, (player) => {
     player.loop = true;
@@ -49,6 +49,10 @@ export const VideoPlayer = ({ src, isPlaying }: VideoPlayerProps) => {
     setIsCommentActive((prev) => !prev);
   };
 
+  const handleThemeActive = () => {
+    setIsThemeActive((prev) => !prev);
+  };
+
   return (
     <S.Container>
       <VideoView
@@ -64,7 +68,7 @@ export const VideoPlayer = ({ src, isPlaying }: VideoPlayerProps) => {
       <S.PressableArea onPress={handleVideoPress} />
       <AnimatedIcon isPaused={isPaused} />
       <S.LeftArrow onPress={() => console.log('press')} />
-      <S.Menu />
+      <S.Menu onPress={handleThemeActive} />
       <S.IconContainer>
         <S.Heart />
         <S.Chat onPress={handleCommentActive} />
@@ -88,7 +92,8 @@ export const VideoPlayer = ({ src, isPlaying }: VideoPlayerProps) => {
           <S.Arrow />
         </S.LinkButton>
       </S.InfoContainer>
-      <CommentBox isActive={isCommentActive} setIsActive={setIsCommentActive} />
+      <CommentBox />
+      <ThemeBox />
     </S.Container>
   );
 };

@@ -4,11 +4,8 @@ import { CustomText } from '../../common/CustomText';
 import BottomSheet from '../BottomSheet';
 import * as S from './CommentBox.styles';
 import { Comment, CommentProps } from '../Comment/Comment';
-
-interface CommentBoxProps {
-  isActive: boolean;
-  setIsActive: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import { useRecoilState } from 'recoil';
+import { commentState } from '../../../store/videoState';
 
 const dummyComments = [
   {
@@ -52,9 +49,10 @@ const dummyComments = [
   },
 ];
 
-export const CommentBox = ({ isActive, setIsActive }: CommentBoxProps) => {
+export const CommentBox = () => {
   const [isTextInputFocused, setIsTextInputFocused] = useState(false);
   const [commentList, setCommentList] = useState<CommentProps[]>([]);
+  const [isActive, setIsActive] = useRecoilState(commentState);
 
   useEffect(() => {
     setCommentList(dummyComments);
@@ -62,6 +60,7 @@ export const CommentBox = ({ isActive, setIsActive }: CommentBoxProps) => {
 
   return (
     <BottomSheet
+      sheetType="comment"
       isActive={isActive}
       setIsActive={setIsActive}
       isTextInputFocused={isTextInputFocused}

@@ -10,21 +10,23 @@ import {
 import styled from 'styled-components/native';
 import theme from '../../styles/theme';
 
-interface CommentBoxProps {
+interface BottomSheetProps {
+  sheetType: 'theme' | 'comment';
   isActive: boolean;
   setIsActive: React.Dispatch<React.SetStateAction<boolean>>;
+  children: any;
   isTextInputFocused: boolean;
   setIsTextInputFocused: React.Dispatch<React.SetStateAction<boolean>>;
-  children: any;
 }
 
-const BottomSheet = ({
-  isActive,
-  setIsActive,
-  isTextInputFocused,
-  setIsTextInputFocused,
-  children,
-}: CommentBoxProps) => {
+const BottomSheet = (props: BottomSheetProps) => {
+  const { sheetType, isActive, setIsActive, children } = props;
+  const isCommentSheet = sheetType === 'comment';
+  const isTextInputFocused = isCommentSheet ? props.isTextInputFocused : false;
+  const setIsTextInputFocused = isCommentSheet
+    ? props.setIsTextInputFocused
+    : () => {};
+
   const [panY] = useState(new Animated.Value(0));
   const [keyboardHeight, setKeyboardHeight] = useState(0);
   const screenHeight = Dimensions.get('window').height;
@@ -104,21 +106,39 @@ const BottomSheet = ({
       {isActive && (
         <Container>
           <BackgroundBlur onPress={closeBottomSheet} />
-          <Animated.View
-            style={[
-              styles.container,
-              {
-                transform: [{ translateY }],
-                bottom: keyboardHeight,
-              },
-            ]}
-            {...panResponder.panHandlers}
-          >
-            <Bar />
-            {React.Children.map(children, (child) =>
-              React.cloneElement(child, { setIsTextInputFocused })
-            )}
-          </Animated.View>
+          {sheetType === 'comment' && (
+            <Animated.View
+              style={[
+                styles.commentContainer,
+                {
+                  transform: [{ translateY }],
+                  bottom: keyboardHeight,
+                },
+              ]}
+              {...panResponder.panHandlers}
+            >
+              <Bar />
+              {React.Children.map(children, (child) =>
+                React.cloneElement(child, { setIsTextInputFocused })
+              )}
+            </Animated.View>
+          )}
+          {sheetType === 'theme' && (
+            <Animated.View
+              style={[
+                styles.themeContainer,
+                {
+                  transform: [{ translateY }],
+                },
+              ]}
+              {...panResponder.panHandlers}
+            >
+              <Bar />
+              {React.Children.map(children, (child) =>
+                React.cloneElement(child)
+              )}
+            </Animated.View>
+          )}
         </Container>
       )}
     </>
@@ -126,7 +146,7 @@ const BottomSheet = ({
 };
 
 const styles = StyleSheet.create({
-  container: {
+  commentContainer: {
     position: 'absolute',
     left: 0,
     right: 0,
@@ -137,6 +157,21 @@ const styles = StyleSheet.create({
     paddingBottom: 0,
 
     height: '70%',
+    elevation: 5,
+    alignItems: 'center',
+  },
+  themeContainer: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'white',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 16,
+    paddingBottom: 0,
+
+    //height: 210,
     elevation: 5,
     alignItems: 'center',
   },

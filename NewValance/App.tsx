@@ -1,4 +1,5 @@
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { RecoilRoot } from 'recoil';
 
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
@@ -37,29 +38,31 @@ const App = () => {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <ThemeProvider theme={theme}>
-        <NavigationContainer>
-          <Stack.Navigator
-            initialRouteName="Landing"
-            screenOptions={{ headerShown: false, animation: 'none' }}
-          >
-            <Stack.Screen name="Landing" component={LandingPage} />
+      <RecoilRoot>
+        <ThemeProvider theme={theme}>
+          <NavigationContainer>
+            <Stack.Navigator
+              initialRouteName="Landing"
+              screenOptions={{ headerShown: false, animation: 'none' }}
+            >
+              <Stack.Screen name="Landing" component={LandingPage} />
 
-            <Stack.Screen name="Login" component={LoginPage} />
-            <Stack.Screen name="Signin" component={SigninPage} />
+              <Stack.Screen name="Login" component={LoginPage} />
+              <Stack.Screen name="Signin" component={SigninPage} />
 
-            <Stack.Screen name="Category" component={CategoryPage} />
-            <Stack.Screen name="Edit" component={EditPage} />
-            <Stack.Screen name="Home" component={HomePage} />
-            <Stack.Screen name="Likes" component={LikesPage} />
-            <Stack.Screen name="Search" component={SearchPage} />
-            <Stack.Screen name="My" component={MyPage} />
-            <Stack.Screen name="ProfileEdit" component={ProfileEditPage} />
+              <Stack.Screen name="Category" component={CategoryPage} />
+              <Stack.Screen name="Edit" component={EditPage} />
+              <Stack.Screen name="Home" component={HomePage} />
+              <Stack.Screen name="Likes" component={LikesPage} />
+              <Stack.Screen name="Search" component={SearchPage} />
+              <Stack.Screen name="My" component={MyPage} />
+              <Stack.Screen name="ProfileEdit" component={ProfileEditPage} />
 
-            <Stack.Screen name="Video" component={VideoPage} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </ThemeProvider>
+              <Stack.Screen name="Video" component={VideoPage} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </ThemeProvider>
+      </RecoilRoot>
     </GestureHandlerRootView>
   );
 };

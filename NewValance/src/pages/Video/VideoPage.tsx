@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { VideoPlayer } from '../../components/VideoPage/VideoPlayer/VideoPlayer';
 import * as S from './VideoPage.styles';
+import { useRecoilValue } from 'recoil';
+import { commentState } from '../../store/videoState';
 
 interface VideoData {
   id: number;
@@ -41,6 +43,7 @@ const dummyData = [
 const VideoPage = () => {
   const [videos, setVideos] = useState<VideoData[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const isCommentActive = useRecoilValue(commentState);
 
   useEffect(() => {
     setVideos(dummyData);
@@ -55,7 +58,7 @@ const VideoPage = () => {
         renderItem={({ item, index }: any) => (
           <VideoPlayer src={item.src} isPlaying={index === currentIndex} />
         )}
-        scrollEnabled={true}
+        scrollEnabled={!isCommentActive}
         pagingEnabled={true}
         horizontal
         showsHorizontalScrollIndicator={false}
