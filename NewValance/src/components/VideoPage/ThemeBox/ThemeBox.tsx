@@ -3,7 +3,7 @@ import theme from '../../../styles/theme';
 import { CustomText } from '../../common/CustomText';
 import BottomSheet from '../BottomSheet';
 import { useRecoilState } from 'recoil';
-import { themeState } from '../../../store/videoState';
+import { selectedThemeState, themeState } from '../../../store/videoState';
 import * as S from './ThemeBox.styles';
 import CheckIcon from '../../../assets/images/VideoPage/check.svg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -47,9 +47,13 @@ export const ThemeBox = () => {
 };
 
 const ThemeComponent = ({ title, desc }: themeInfo) => {
-  const isActive = true; // 리코일 or async 불러와서 비교
+  const [selectedTheme, setSelectedTheme] = useRecoilState(selectedThemeState);
+  const isActive = title === selectedTheme;
   return (
-    <S.ThemeContainer $isActive={isActive}>
+    <S.ThemeContainer
+      $isActive={isActive}
+      onPress={() => setSelectedTheme(title)}
+    >
       <CheckIcon style={{ opacity: isActive ? 1 : 0 }} />
       <S.TextContainer>
         <CustomText font={theme.fonts.reg18}>{title}</CustomText>
