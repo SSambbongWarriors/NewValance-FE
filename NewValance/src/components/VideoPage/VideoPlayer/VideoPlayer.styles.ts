@@ -4,10 +4,12 @@ import { Dimensions } from 'react-native';
 import MenuIcon from '../../../assets/images/VideoPage/menu.svg';
 import LeftArrowIcon from '../../../assets/images/VideoPage/arrow_key_left.svg';
 import HeartIcon from '../../../assets/images/VideoPage/favorite.svg';
+import HeartFilledIcon from '../../../assets/images/VideoPage/favorite-fill.svg';
 import ChatIcon from '../../../assets/images/VideoPage/chat.svg';
 import ShareIcon from '../../../assets/images/VideoPage/share.svg';
 import LinkIcon from '../../../assets/images/VideoPage/arrow_up_right.svg';
 import theme from '../../../styles/theme';
+import WebView from 'react-native-webview';
 
 export const Container = styled.View`
   width: ${Dimensions.get('window').width}px;
@@ -43,6 +45,8 @@ export const IconContainer = styled.View`
 `;
 
 export const Heart = styled(HeartIcon)``;
+
+export const HeartFilled = styled(HeartFilledIcon)``;
 
 export const Chat = styled(ChatIcon)``;
 
@@ -80,3 +84,9 @@ export const LinkButton = styled.Pressable`
 `;
 
 export const Arrow = styled(LinkIcon)``;
+
+export const WebViewContainer = styled(WebView)`
+  width: ${Dimensions.get('window').width}px;
+  height: ${Dimensions.get('window').height}px;
+  position: absolute;
+`;

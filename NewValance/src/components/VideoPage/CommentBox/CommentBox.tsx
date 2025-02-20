@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import theme from '../../../styles/theme';
 import { CustomText } from '../../common/CustomText';
 import BottomSheet from '../BottomSheet';
@@ -6,6 +6,7 @@ import * as S from './CommentBox.styles';
 import { Comment, CommentProps } from '../Comment/Comment';
 import { useRecoilState } from 'recoil';
 import { commentState } from '../../../store/videoState';
+import { FlatList } from 'react-native';
 
 const dummyComments = [
   {
@@ -53,10 +54,36 @@ export const CommentBox = () => {
   const [isTextInputFocused, setIsTextInputFocused] = useState(false);
   const [commentList, setCommentList] = useState<CommentProps[]>([]);
   const [isActive, setIsActive] = useRecoilState(commentState);
+  const [myComment, setMyComment] = useState<string>('');
+  const commentListRef = useRef<FlatList<CommentProps>>();
 
   useEffect(() => {
     setCommentList(dummyComments);
   }, []);
+
+  const onChangeComment = (content: string) => {
+    setMyComment(content);
+  };
+
+  const addComment = () => {
+    console.log(myComment);
+    if (myComment.trim() === '') return;
+
+    const newComment: CommentProps = {
+      image:
+        'https://i.pinimg.com/736x/14/1b/e7/141be75a96b0791ef049d65dafb91769.jpg',
+      name: '나',
+      content: myComment.trim(),
+    };
+
+    setCommentList((prev) => [...prev, newComment]);
+    setMyComment('');
+    commentListRef.current?.scrollToIndex({
+      animated: true,
+      index: commentList.length - 1,
+      viewPosition: 0,
+    });
+  };
 
   return (
     <BottomSheet
@@ -68,6 +95,7 @@ export const CommentBox = () => {
     >
       <CustomText font={theme.fonts.reg18}>댓글</CustomText>
       <S.CommentList
+        ref={commentListRef}
         data={commentList}
         showsVerticalScrollIndicator={false}
         renderItem={({ item }: { item: CommentProps }) => (
@@ -79,10 +107,16 @@ export const CommentBox = () => {
           source={require('../../../assets/images/common/default-thumbnail.png')}
         />
         <S.CommentInput
+          type="text"
+          name="content"
+          value={myComment}
+          onChangeText={onChangeComment}
+          onSubmitEditing={addComment}
           placeholder={'댓글을 남겨보세요.'}
           placeholderTextColor={theme.colors.gray_3}
           onFocus={() => setIsTextInputFocused(true)}
           onBlur={() => setIsTextInputFocused(false)}
+          returnKeyType="done"
         />
       </S.InputContainer>
     </BottomSheet>

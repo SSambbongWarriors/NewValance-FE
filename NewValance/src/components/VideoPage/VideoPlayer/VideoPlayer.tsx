@@ -10,6 +10,8 @@ import { CommentBox } from '../CommentBox/CommentBox';
 import { useRecoilState } from 'recoil';
 import { commentState, themeState } from '../../../store/videoState';
 import { ThemeBox } from '../ThemeBox/ThemeBox';
+import { useNavigation } from '@react-navigation/native';
+import { Linking } from 'react-native';
 
 interface VideoPlayerProps {
   src: string;
@@ -18,8 +20,11 @@ interface VideoPlayerProps {
 
 export const VideoPlayer = ({ src, isPlaying }: VideoPlayerProps) => {
   const [isPaused, setIsPaused] = useState(!isPlaying);
+  const [isLiked, setIsLiked] = useState(false);
   const [isCommentActive, setIsCommentActive] = useRecoilState(commentState);
   const [isthemeActive, setIsThemeActive] = useRecoilState(themeState);
+
+  const navigate = useNavigation();
 
   const player = useVideoPlayer(src, (player) => {
     player.loop = true;
@@ -53,6 +58,20 @@ export const VideoPlayer = ({ src, isPlaying }: VideoPlayerProps) => {
     setIsThemeActive((prev) => !prev);
   };
 
+  const handleLiked = () => {
+    setIsLiked((prev) => !prev);
+  };
+
+  const handleNewsLink = async () => {
+    const url = 'https://www.ajunews.com/view/20241024212343156';
+    const supported = await Linking.canOpenURL(url);
+    if (supported) {
+      await Linking.openURL(url);
+    } else {
+      console.log('URL을 열 수 없습니다.');
+    }
+  };
+
   return (
     <S.Container>
       <VideoView
@@ -67,10 +86,14 @@ export const VideoPlayer = ({ src, isPlaying }: VideoPlayerProps) => {
       />
       <S.PressableArea onPress={handleVideoPress} />
       <AnimatedIcon isPaused={isPaused} />
-      <S.LeftArrow onPress={() => console.log('press')} />
+      <S.LeftArrow onPress={() => navigate.goBack()} />
       <S.Menu onPress={handleThemeActive} />
       <S.IconContainer>
-        <S.Heart />
+        {isLiked ? (
+          <S.HeartFilled onPress={handleLiked} />
+        ) : (
+          <S.Heart onPress={handleLiked} />
+        )}
         <S.Chat onPress={handleCommentActive} />
         <S.Share />
       </S.IconContainer>
@@ -85,7 +108,7 @@ export const VideoPlayer = ({ src, isPlaying }: VideoPlayerProps) => {
             설 연휴 마지막 날 '한파'...아침 최저 -10도 안팎 강추위
           </CustomText>
         </S.Title>
-        <S.LinkButton onPress={() => console.log('press')}>
+        <S.LinkButton onPress={handleNewsLink}>
           <CustomText font={theme.fonts.bold14} color={theme.colors.gray_4}>
             기사 원문
           </CustomText>
