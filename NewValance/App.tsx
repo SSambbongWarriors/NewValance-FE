@@ -1,11 +1,11 @@
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { RecoilRoot } from 'recoil';
 
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LandingPage from './src/pages/LandingPage';
-import LoginPage from './src/pages/Auth/LoginPage';
+import LoginPage from './src/pages/Auth/LoginPage/LoginPage';
 import SigninPage from './src/pages/Auth/SigninPage';
 import CategoryPage from './src/pages/Main/CategoryPage/CategoryPage';
 import EditPage from './src/pages/Main/EditPage/EditPage';
@@ -17,10 +17,13 @@ import ProfileEditPage from './src/pages/My/ProfileEditPage';
 import VideoPage from './src/pages/Video/VideoPage';
 
 import * as Font from 'expo-font';
+import * as SplashScreen from 'expo-splash-screen';
 import { ThemeProvider } from 'styled-components';
 import theme from './src/styles/theme';
 
 const Stack = createStackNavigator();
+
+SplashScreen.preventAutoHideAsync();
 
 const App = () => {
   const [fontsLoaded, setFontsLoaded] = useState<boolean>(false);
@@ -36,8 +39,18 @@ const App = () => {
     getFont();
   }, []);
 
+  const onLayoutRootView = useCallback(() => {
+    if (fontsLoaded) {
+      SplashScreen.hide();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <RecoilRoot>
         <ThemeProvider theme={theme}>
           <NavigationContainer>

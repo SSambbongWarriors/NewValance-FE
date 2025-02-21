@@ -8,7 +8,7 @@ interface IconProps {
 export const Icon = ({ src, onPress }: IconProps) => {
   return (
     <Pressable onPress={onPress}>
-      <Image source={src} />
+      <Image source={require(src)} />
     </Pressable>
   );
 };
