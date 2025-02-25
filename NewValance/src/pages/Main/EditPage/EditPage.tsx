@@ -26,7 +26,11 @@ const EditPage = () => {
         </S.Header>
         <S.ContentContainer>
           <DraggableList data={catList} setData={setCatList} />
-          <Button text="저장하기" isActive={true} />
+          <Button
+            text="저장하기"
+            isActive={true}
+            onPress={() => console.log('저장')}
+          />
         </S.ContentContainer>
       </S.Container>
     </Layout>

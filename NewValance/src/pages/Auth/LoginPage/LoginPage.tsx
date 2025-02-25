@@ -3,8 +3,11 @@ import { CustomText } from '../../../components/common/CustomText';
 import theme from '../../../styles/theme';
 import * as S from './LoginPage.styles';
 import { ImageBackground, View } from 'react-native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 const LoginPage = () => {
+  const navigate = useNavigation<NavigationProp<any>>(); //로그인 구현 전 임시 네비게이션
+
   return (
     <ImageBackground
       style={{ flex: 1 }}
@@ -19,7 +22,7 @@ const LoginPage = () => {
         </S.TextWrapper>
       </S.Container>
       <S.ButtonContainer>
-        <Pressable>
+        <Pressable onPress={() => navigate.navigate('Signin')}>
           <S.KakaoButton
             source={require('../../../assets/images/LoginPage/kakao-login-icon.png')}
           />
