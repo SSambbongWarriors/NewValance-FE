@@ -12,8 +12,8 @@ import EditPage from './src/pages/Main/EditPage/EditPage';
 import HomePage from './src/pages/Main/HomePage/HomePage';
 import LikesPage from './src/pages/Main/LikesPage/LikesPage';
 import SearchPage from './src/pages/Main/SearchPage/SearchPage';
-import MyPage from './src/pages/My/MyPage';
-import ProfileEditPage from './src/pages/My/ProfileEditPage';
+import MyPage from './src/pages/My/MyPage/MyPage';
+import ProfileEditPage from './src/pages/My/ProfileEditPage/ProfileEditPage';
 import VideoPage from './src/pages/Video/VideoPage';
 
 import * as Font from 'expo-font';

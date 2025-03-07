@@ -28,7 +28,11 @@ const pageConfig: Record<string, PageConfig> = {
     barStyle: 'light-content',
   },
   Video: { navBar: true },
-  My: { statusColor: theme.colors.violet, barStyle: 'light-content' },
+  My: {
+    statusColor: theme.colors.violet,
+    barStyle: 'light-content',
+    navBar: true,
+  },
   ProfileEdit: { statusColor: theme.colors.violet_2 },
   Signin: { statusColor: theme.colors.violet_2 },
 } as const;
