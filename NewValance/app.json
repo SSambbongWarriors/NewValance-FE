@@ -32,6 +32,10 @@
           "backgroundColor": "#232323",
           "image": "./assets/images/common/logo.png",
           "imageWidth": 200
+        },
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
       ],
       "expo-video"

@@ -18,5 +18,4 @@ export const TextInput = styled.TextInput`
 
 export const InputWrapper = styled.View`
   gap: 8px;
-  margin-top: 100px;
 `;

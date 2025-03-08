@@ -9,7 +9,7 @@ interface NameInputProps {
   name: string;
   setName: React.Dispatch<React.SetStateAction<string>>;
   isDuplicated: boolean;
-  setIsButtonActive: React.Dispatch<React.SetStateAction<boolean>>;
+  setIsButtonActive?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const NameInput = ({
@@ -20,13 +20,20 @@ export const NameInput = ({
 }: NameInputProps) => {
   const onChangeName = useCallback((content: string) => {
     setName(content);
-    setIsButtonActive(content.trim() !== '');
+    if (setIsButtonActive) {
+      setIsButtonActive(content.trim() !== '');
+    }
   }, []);
 
   return (
     <S.InputWrapper>
       <S.InputContainer>
-        <S.TextInput name="content" value={name} onChangeText={onChangeName} />
+        <S.TextInput
+          name="content"
+          value={name}
+          onChangeText={onChangeName}
+          maxLength={8}
+        />
         {isDuplicated && <WarnIcon />}
       </S.InputContainer>
       {isDuplicated && (

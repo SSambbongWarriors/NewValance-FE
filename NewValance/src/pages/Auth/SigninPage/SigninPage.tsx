@@ -77,12 +77,14 @@ const SigninPage = () => {
         </CustomText>
       </S.TextWrapper>
       {!passStage ? (
-        <NameInput
-          name={name}
-          setName={setName}
-          isDuplicated={isDuplicated}
-          setIsButtonActive={setIsButtonActive}
-        />
+        <S.InputWrapper>
+          <NameInput
+            name={name}
+            setName={setName}
+            isDuplicated={isDuplicated}
+            setIsButtonActive={setIsButtonActive}
+          />
+        </S.InputWrapper>
       ) : (
         <TagSelector tagList={tagList} setTagList={setTagList} />
       )}

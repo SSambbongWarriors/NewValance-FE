@@ -19,6 +19,10 @@ export const TextWrapper = styled.View`
   margin-top: 80px;
 `;
 
+export const InputWrapper = styled.View`
+  margin-top: 100px;
+`;
+
 export const ButtonWrapper = styled.View`
   margin-top: auto;
   margin-bottom: 16px;

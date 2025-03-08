@@ -11,11 +11,14 @@ import {
   LogoutModal,
   SignOutModal,
 } from '../../../components/MyPage/Modal/Modal';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 
 const MyPage = () => {
   const [isModalActive, setIsModalActive] = useState<
     false | 'logout' | 'signout'
   >(false);
+
+  const navigate = useNavigation<NavigationProp<any>>();
 
   return (
     <Layout>
@@ -39,7 +42,7 @@ const MyPage = () => {
             <CustomText font={theme.fonts.bold18} color={theme.colors.white}>
               {'지금까지 뉴밸런스에서\n이만큼의 숏폼을 시청했어요!'}
             </CustomText>
-            <SettingIcon />
+            <SettingIcon onPress={() => navigate.navigate('ProfileEdit')} />
           </S.TextContainer>
           <ViewChart />
           <TagChart />
