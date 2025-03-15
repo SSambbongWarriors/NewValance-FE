@@ -11,7 +11,8 @@ import { useRecoilState } from 'recoil';
 import { commentState, themeState } from '../../../store/videoState';
 import { ThemeBox } from '../ThemeBox/ThemeBox';
 import { useNavigation } from '@react-navigation/native';
-import { Linking } from 'react-native';
+import { Alert, BackHandler, Linking } from 'react-native';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 interface VideoPlayerProps {
   src: string;
@@ -22,9 +23,9 @@ export const VideoPlayer = ({ src, isPlaying }: VideoPlayerProps) => {
   const [isPaused, setIsPaused] = useState(!isPlaying);
   const [isLiked, setIsLiked] = useState(false);
   const [isCommentActive, setIsCommentActive] = useRecoilState(commentState);
-  const [isthemeActive, setIsThemeActive] = useRecoilState(themeState);
+  const [isThemeActive, setIsThemeActive] = useRecoilState(themeState);
 
-  const navigate = useNavigation();
+  const navigate = useNavigation<StackNavigationProp<any>>();
 
   const player = useVideoPlayer(src, (player) => {
     player.loop = true;
@@ -45,6 +46,33 @@ export const VideoPlayer = ({ src, isPlaying }: VideoPlayerProps) => {
       player.play();
     }
   }, [isPaused]);
+
+  useEffect(() => {
+    const backAction = () => {
+      if (navigate.isFocused()) {
+        if (isCommentActive) {
+          setIsCommentActive(false);
+          return true;
+        } else if (isThemeActive) {
+          setIsThemeActive(false);
+          return true;
+        } else {
+          navigate.reset({
+            index: 0,
+            routes: [{ name: 'Home' }],
+          });
+          return true;
+        }
+      }
+      return false;
+    };
+
+    BackHandler.addEventListener('hardwareBackPress', backAction);
+
+    return () => {
+      BackHandler.removeEventListener('hardwareBackPress', backAction);
+    };
+  }, [isCommentActive, isThemeActive]);
 
   const handleVideoPress = () => {
     setIsPaused((prev) => !prev);
@@ -86,7 +114,14 @@ export const VideoPlayer = ({ src, isPlaying }: VideoPlayerProps) => {
       />
       <S.PressableArea onPress={handleVideoPress} />
       <AnimatedIcon isPaused={isPaused} />
-      <S.LeftArrow onPress={() => navigate.goBack()} />
+      <S.LeftArrow
+        onPress={() =>
+          navigate.reset({
+            index: 0,
+            routes: [{ name: 'Home' }],
+          })
+        }
+      />
       <S.Menu onPress={handleThemeActive} />
       <S.IconContainer>
         {isLiked ? (
