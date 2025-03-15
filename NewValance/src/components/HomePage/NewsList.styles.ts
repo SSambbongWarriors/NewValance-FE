@@ -4,7 +4,6 @@ import { hp } from '../../styles/ResponsiveSize';
 export const Container = styled.View`
   flex: 1;
   margin-left: 16px;
-  margin-top: 12px;
 
   padding-bottom: ${hp(64)}px;
 `;
@@ -13,7 +12,7 @@ export const CategoryContainer = styled.View`
   margin-bottom: 16px;
 `;
 
-export const Header = styled.View`
+export const Header = styled.Pressable`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;

@@ -121,10 +121,11 @@ export const TagSelector = ({ tagList, setTagList }: TagSelectorProps) => {
         data={Object.keys(tagData)}
         renderItem={({ item }: { item: keyof typeof tagData }) => (
           <S.Category
+            key={item}
             $isActive={selectedCat === item}
             onPress={() => onPressCat(item)}
           >
-            <CustomText font={theme.fonts.bold24} color={theme.colors.violet}>
+            <CustomText font={theme.fonts.bold20} color={theme.colors.violet}>
               {item}
             </CustomText>
           </S.Category>
@@ -133,6 +134,7 @@ export const TagSelector = ({ tagList, setTagList }: TagSelectorProps) => {
       <S.TagList style={{ flexWrap: 'wrap' }}>
         {tagData[selectedCat].map((item: string) => (
           <S.Tag
+            key={item}
             $isActive={tagList.has(item)}
             onPress={() => {
               toggleItem(item);

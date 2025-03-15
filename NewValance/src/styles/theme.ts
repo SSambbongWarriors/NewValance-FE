@@ -16,52 +16,58 @@ export const theme = {
     bold32: {
       fontFamily: 'Pretendard-Bold',
       fontSize: 32,
-      lineHeights: 32 * 1.4,
     },
     reg32: {
       fontFamily: 'Pretendard-Regular',
       fontSize: 32,
-      lineHeights: 32 * 1.4,
+    },
+    bold28: {
+      fontFamily: 'Pretendard-Bold',
+      fontSize: 28,
+    },
+    reg28: {
+      fontFamily: 'Pretendard-Regular',
+      fontSize: 28,
     },
     bold24: {
       fontFamily: 'Pretendard-Bold',
       fontSize: 24,
-      lineHeights: 24 * 1.4,
     },
     reg24: {
       fontFamily: 'Pretendard-Regular',
       fontSize: 24,
-      lineHeights: 24 * 1.4,
+    },
+    bold20: {
+      fontFamily: 'Pretendard-Bold',
+      fontSize: 20,
+    },
+    reg20: {
+      fontFamily: 'Pretendard-Regular',
+      fontSize: 20,
     },
     bold18: {
       fontFamily: 'Pretendard-Bold',
       fontSize: 18,
-      lineHeights: 18 * 1.4,
     },
     reg18: {
       fontFamily: 'Pretendard-Regular',
       fontSize: 18,
-      lineHeights: 18 * 1.4,
     },
     bold14: {
       fontFamily: 'Pretendard-Bold',
       fontSize: 14,
-      lineHeights: 14 * 1.4,
     },
     reg14: {
       fontFamily: 'Pretendard-Regular',
       fontSize: 14,
-      lineHeights: 14 * 1.4,
     },
     bold12: {
       fontFamily: 'Pretendard-Bold',
       fontSize: 12,
-      lineHeights: 12 * 1.4,
     },
     reg12: {
       fontFamily: 'Pretendard-Regular',
       fontSize: 12,
-      lineHeights: 12 * 1.4,
     },
   },
 };

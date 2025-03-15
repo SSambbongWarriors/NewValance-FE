@@ -16,9 +16,7 @@ const CategoryPage = () => {
     <Layout>
       <S.Container>
         <S.Header>
-          <CustomText font={theme.fonts.bold32} color={theme.colors.black_1}>
-            내가 좋아요한 뉴스
-          </CustomText>
+          <CustomText font={theme.fonts.bold24}>내가 좋아요한 뉴스</CustomText>
         </S.Header>
         <VerticalVideoList data={dummyData} />
       </S.Container>

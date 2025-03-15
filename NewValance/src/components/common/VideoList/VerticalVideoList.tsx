@@ -9,11 +9,7 @@ interface VideoListProps {
 export const VerticalVideoList = ({ data }: VideoListProps) => {
   return (
     <FlatList
-      numColumns={2}
-      columnWrapperStyle={{
-        justifyContent: 'space-between',
-        marginBottom: 18,
-      }}
+      contentContainerStyle={{ gap: 16 }}
       showsVerticalScrollIndicator={false}
       data={data}
       renderItem={({ item }: { item: NewsData }) => (

@@ -22,10 +22,7 @@ export const TagList = styled.View`
 `;
 
 export const Tag = styled.Pressable`
-  padding-top: 5px;
-  padding-bottom: 5px;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding: 4px 12px;
 
   border-radius: 30px;
   border-width: 2px;

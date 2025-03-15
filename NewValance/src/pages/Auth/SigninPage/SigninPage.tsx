@@ -7,6 +7,7 @@ import { Keyboard } from 'react-native';
 import { NameInput } from '../../../components/SigninPage/NameInput';
 import { TagSelector } from '../../../components/SigninPage/TagSelector';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import Layout from '../../Layout';
 
 const SigninPage = () => {
   const [passStage, setPassStage] = useState(false);
@@ -58,46 +59,48 @@ const SigninPage = () => {
   };
 
   return (
-    <S.Container>
-      <S.SkipButton
-        style={{ opacity: passStage ? 1 : 0 }}
-        disabled={!passStage}
-        onPress={() => navigate.navigate('Home')}
-      >
-        <CustomText font={theme.fonts.reg14} color={theme.colors.gray_4}>
-          건너뛰고 시작하기
-        </CustomText>
-      </S.SkipButton>
+    <Layout>
+      <S.Container>
+        <S.SkipButton
+          style={{ opacity: passStage ? 1 : 0 }}
+          disabled={!passStage}
+          onPress={() => navigate.navigate('Home')}
+        >
+          <CustomText font={theme.fonts.reg14} color={theme.colors.gray_4}>
+            건너뛰고 시작하기
+          </CustomText>
+        </S.SkipButton>
 
-      <S.TextWrapper>
-        <CustomText font={theme.fonts.bold24}>
-          {!passStage
-            ? '뉴밸런스가 처음이시군요!\n어떤 이름으로 시작하시겠어요?'
-            : '어떤 주제에\n관심이 있으신가요?'}
-        </CustomText>
-      </S.TextWrapper>
-      {!passStage ? (
-        <S.InputWrapper>
-          <NameInput
-            name={name}
-            setName={setName}
-            isDuplicated={isDuplicated}
-            setIsButtonActive={setIsButtonActive}
-          />
-        </S.InputWrapper>
-      ) : (
-        <TagSelector tagList={tagList} setTagList={setTagList} />
-      )}
-      {!isKeyBoardActive && (
-        <S.ButtonWrapper onPress={onPressButton}>
-          <Button
-            text={!passStage ? '계속하기' : '시작하기'}
-            isActive={isButtonActive}
-            onPress={onPressButton}
-          />
-        </S.ButtonWrapper>
-      )}
-    </S.Container>
+        <S.TextWrapper>
+          <CustomText font={theme.fonts.bold24}>
+            {!passStage
+              ? '뉴밸런스가 처음이시군요!\n어떤 이름으로 시작하시겠어요?'
+              : '어떤 주제에\n관심이 있으신가요?'}
+          </CustomText>
+        </S.TextWrapper>
+        {!passStage ? (
+          <S.InputWrapper>
+            <NameInput
+              name={name}
+              setName={setName}
+              isDuplicated={isDuplicated}
+              setIsButtonActive={setIsButtonActive}
+            />
+          </S.InputWrapper>
+        ) : (
+          <TagSelector tagList={tagList} setTagList={setTagList} />
+        )}
+        {!isKeyBoardActive && (
+          <S.ButtonWrapper onPress={onPressButton}>
+            <Button
+              text={!passStage ? '계속하기' : '시작하기'}
+              isActive={isButtonActive}
+              onPress={onPressButton}
+            />
+          </S.ButtonWrapper>
+        )}
+      </S.Container>
+    </Layout>
   );
 };
 

@@ -17,7 +17,7 @@ export const DraggableList = ({ data, setData }: DraggableListProps) => {
 
     return (
       <S.ItemContainer onLongPress={onStartDrag} disabled={isActive}>
-        <CustomText font={theme.fonts.reg24}>{item}</CustomText>
+        <CustomText font={theme.fonts.reg20}>{item}</CustomText>
         <ListIcon />
       </S.ItemContainer>
     );

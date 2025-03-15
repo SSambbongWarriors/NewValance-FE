@@ -51,7 +51,6 @@ const VideoPage = () => {
 
   return (
     <S.Container>
-      {/* <VideoPlayer src={dummyData[0].src} isPlaying={true} /> */}
       <S.VideoList
         data={videos}
         keyExtractor={(item: any) => item.id.toString()}

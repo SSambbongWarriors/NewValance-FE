@@ -18,9 +18,7 @@ const CategoryPage = ({ route }: any) => {
     <Layout>
       <S.Container>
         <S.Header>
-          <CustomText font={theme.fonts.bold32} color={theme.colors.black_1}>
-            {cat}
-          </CustomText>
+          <CustomText font={theme.fonts.bold28}>{cat}</CustomText>
         </S.Header>
         <VerticalVideoList data={dummyData} />
       </S.Container>

@@ -24,7 +24,6 @@ export const SearchBar = ({ setIsSearched }: SearchBarProps) => {
         onChangeText={(text: string) => setSearchText(text)}
         value={searchText}
       />
-      <Text>{searchText}</Text>
       <SearchIcon onPress={onPressSearch} />
     </S.Container>
   );

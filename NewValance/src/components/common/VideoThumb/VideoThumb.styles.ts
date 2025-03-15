@@ -7,18 +7,23 @@ export const ContainerS = styled.TouchableOpacity`
 `;
 
 export const ThumbnailS = styled.Image`
-  width: 100%;
+  width: ${wp(106)}px;
   height: ${hp(152)}px;
   border-radius: ${wp(8)}px;
 `;
 
 export const ContainerL = styled.TouchableOpacity`
-  width: ${wp(164)}px;
+  flex: 1;
   gap: ${hp(8)}px;
+  flex-direction: row;
 `;
 
 export const ThumbnailL = styled.Image`
-  width: 100%;
-  height: ${hp(235)}px;
+  width: ${wp(80)}px;
+  height: ${hp(120)}px;
   border-radius: ${wp(8)}px;
+`;
+
+export const TextWrapper = styled.View`
+  flex-shrink: 1;
 `;

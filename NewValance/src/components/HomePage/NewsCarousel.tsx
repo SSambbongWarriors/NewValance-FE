@@ -11,7 +11,7 @@ interface NewsCarouselProps {
 }
 
 export const NewsCarousel = ({ data }: NewsCarouselProps) => {
-  const offset = wp(335) + 12;
+  const offset = wp(300) + 12;
   const snapToOffsets = [0, offset, offset * 2];
 
   return (
@@ -23,19 +23,13 @@ export const NewsCarousel = ({ data }: NewsCarouselProps) => {
         snapToOffsets={snapToOffsets}
         decelerationRate="fast"
         windowSize={3}
+        showsHorizontalScrollIndicator={false}
         renderItem={({ item }: { item: NewsData }) => (
-          <S.Card>
-            <S.Thumbnail
-              source={{ uri: item.thumbnail }}
-              resizeMode="cover"
-              imageStyle={{
-                borderRadius: 15,
-              }}
-            >
+          <S.Card style={{ boxShadow: '0px 4px 15px 0px rgba(0, 0, 0, 0.10)' }}>
+            <S.Thumbnail source={{ uri: item.thumbnail }} resizeMode="cover">
               <S.Gradient
                 colors={['transparent', 'rgba(0,0,0,0.9)']}
                 locations={[0.7, 1]}
-                style={{ justifyContent: 'flex-end' }}
               >
                 <S.Title>
                   <CustomText

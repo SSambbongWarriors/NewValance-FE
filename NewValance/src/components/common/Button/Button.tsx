@@ -13,7 +13,7 @@ export const Button = ({ text, isActive, onPress }: ButtonProps) => {
   return (
     <S.Container $isActive={isActive} onPress={onPress} disabled={!isActive}>
       <CustomText
-        font={theme.fonts.bold24}
+        font={theme.fonts.bold20}
         color={isActive ? theme.colors.white : theme.colors.gray_3}
       >
         {text}

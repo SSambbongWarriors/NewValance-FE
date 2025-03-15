@@ -6,7 +6,6 @@ interface CustomTextProps extends TextProps {
   font: {
     fontFamily: string;
     fontSize: number;
-    lineHeights: number;
   };
   color?: string;
 }

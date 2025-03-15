@@ -12,7 +12,7 @@ export const VideoThumbS = ({ title, thumbnail }: VideoThumbProps) => {
     <S.ContainerS>
       <S.ThumbnailS source={{ uri: thumbnail }} resizeMode="cover" />
       <CustomText
-        font={theme.fonts.reg12}
+        font={theme.fonts.reg14}
         color={theme.colors.black_1}
         numberOfLines={2}
         ellipsizeMode="tail"
@@ -27,14 +27,16 @@ export const VideoThumbL = ({ title, thumbnail }: VideoThumbProps) => {
   return (
     <S.ContainerL>
       <S.ThumbnailL source={{ uri: thumbnail }} resizeMode="cover" />
-      <CustomText
-        font={theme.fonts.reg18}
-        color={theme.colors.black_1}
-        numberOfLines={2}
-        ellipsizeMode="tail"
-      >
-        {title}
-      </CustomText>
+      <S.TextWrapper>
+        <CustomText
+          font={theme.fonts.bold18}
+          color={theme.colors.black_1}
+          numberOfLines={4}
+          ellipsizeMode="tail"
+        >
+          {title}
+        </CustomText>
+      </S.TextWrapper>
     </S.ContainerL>
   );
 };

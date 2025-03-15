@@ -37,6 +37,15 @@ export const TagChart = () => {
       y: Math.random() * height,
     }));
 
+    const forceBoundary = () => {
+      nodes.forEach((node) => {
+        if (node.x - node.r < 0) node.x = node.r; // 왼쪽 벽 충돌
+        if (node.x + node.r > width) node.x = width - node.r; // 오른쪽 벽 충돌
+        if (node.y - node.r < 0) node.y = node.r; // 상단 벽 충돌
+        if (node.y + node.r > height) node.y = height - node.r; // 하단 벽 충돌
+      });
+    };
+
     forceSimulation(nodes)
       .force('x', forceX(width / 2).strength(0.05)) // 중앙 정렬
       .force('y', forceY(height / 2).strength(0.05))
@@ -44,7 +53,10 @@ export const TagChart = () => {
         'collide',
         forceCollide((d) => d.r + 1)
       ) // 충돌 방지
-      .on('tick', () => setBubbles([...nodes])); // 값 업데이트
+      .on('tick', () => {
+        forceBoundary();
+        setBubbles([...nodes]);
+      }); // 값 업데이트
   }, []);
 
   return (
