@@ -1,13 +1,23 @@
 import React from 'react';
 import { Text, TextProps } from 'react-native';
+import theme from '../../styles/theme';
 
-export const CustomText: React.FC<TextProps> = ({
+interface CustomTextProps extends TextProps {
+  font: {
+    fontFamily: string;
+    fontSize: number;
+  };
+  color?: string;
+}
+
+export const CustomText: React.FC<CustomTextProps> = ({
   children,
-  style,
+  font,
+  color = theme.colors.black_1,
   ...props
 }) => {
   return (
-    <Text style={[style]} {...props}>
+    <Text style={[font, { color: color }]} {...props}>
       {children}
     </Text>
   );
