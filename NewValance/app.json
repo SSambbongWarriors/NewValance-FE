@@ -2,6 +2,7 @@
   "expo": {
     "name": "newValance",
     "slug": "newValance",
+    "scheme": "newValance",
     "version": "1.0.0",
     "jsEngine": "hermes",
     "orientation": "portrait",
@@ -9,10 +10,11 @@
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/images/common/logo.png",
+      "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
@@ -20,7 +22,12 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.seoyeon_park.newValance"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -30,7 +37,7 @@
         "expo-splash-screen",
         {
           "backgroundColor": "#232323",
-          "image": "./assets/images/common/logo.png",
+          "image": "./src/assets/images/common/logo.png",
           "imageWidth": 200
         }
       ],
@@ -41,6 +48,11 @@
         }
       ],
       "expo-video"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "8b914837-b486-4e3d-be14-a9250b9fdcc7"
+      }
+    }
   }
 }
