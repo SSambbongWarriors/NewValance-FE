@@ -16,11 +16,6 @@ export const ButtonContainer = styled.View`
   justify-content: center;
 `;
 
-export const KakaoButton = styled.Image`
-  width: 300px;
-  object-fit: contain;
-`;
-
 export const TextContainer = styled.View`
   align-items: center;
   justify-content: center;
@@ -39,6 +34,11 @@ export const IconContainer = styled.View`
   gap: 24px;
   margin-top: 20px;
   margin-bottom: 40px;
+`;
+
+export const KakaoButton = styled.Image`
+  width: 300px;
+  object-fit: contain;
 `;
 
 export const CircleButton = styled.Image`

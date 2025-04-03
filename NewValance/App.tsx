@@ -15,6 +15,7 @@ import SearchPage from './src/pages/Main/SearchPage/SearchPage';
 import MyPage from './src/pages/My/MyPage/MyPage';
 import ProfileEditPage from './src/pages/My/ProfileEditPage/ProfileEditPage';
 import VideoPage from './src/pages/Video/VideoPage';
+import KaKaoLoginPage from './src/pages/Auth/KakaoLoginPage';
 
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
@@ -39,11 +40,11 @@ const App = () => {
     getFont();
   }, []);
 
-  const onLayoutRootView = useCallback(() => {
+  const onLayoutRootView = () => {
     if (fontsLoaded) {
       SplashScreen.hide();
     }
-  }, [fontsLoaded]);
+  };
 
   if (!fontsLoaded) {
     return null;
@@ -72,6 +73,8 @@ const App = () => {
               <Stack.Screen name="ProfileEdit" component={ProfileEditPage} />
 
               <Stack.Screen name="Video" component={VideoPage} />
+
+              <Stack.Screen name="Kakao" component={KaKaoLoginPage} />
             </Stack.Navigator>
           </NavigationContainer>
         </ThemeProvider>

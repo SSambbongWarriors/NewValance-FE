@@ -1,8 +1,8 @@
-import { Image, Pressable } from 'react-native';
+import { Pressable } from 'react-native';
 import { CustomText } from '../../../components/common/CustomText';
 import theme from '../../../styles/theme';
 import * as S from './LoginPage.styles';
-import { ImageBackground, View } from 'react-native';
+import { ImageBackground } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import Layout from '../../Layout';
 
@@ -24,7 +24,9 @@ const LoginPage = () => {
           </S.TextWrapper>
         </S.Container>
         <S.ButtonContainer>
-          <Pressable onPress={() => navigate.navigate('Signin')}>
+          <Pressable
+            onPress={() => navigate.navigate('Kakao')} /*카카오 로그인 버튼*/
+          >
             <S.KakaoButton
               source={require('../../../assets/images/LoginPage/kakao-login-icon.png')}
             />
@@ -37,12 +39,16 @@ const LoginPage = () => {
             <S.Line />
           </S.TextContainer>
           <S.IconContainer>
-            <Pressable>
+            <Pressable
+              onPress={() => navigate.navigate('Home')} /*네이버 로그인 버튼*/
+            >
               <S.CircleButton
                 source={require('../../../assets/images/LoginPage/naver-login-icon.png')}
               />
             </Pressable>
-            <Pressable>
+            <Pressable
+              onPress={() => navigate.navigate('Home')} /*구글 로그인 버튼*/
+            >
               <S.CircleButton
                 source={require('../../../assets/images/LoginPage/google-login-icon.png')}
               />
