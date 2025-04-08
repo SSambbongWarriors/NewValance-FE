@@ -17,6 +17,8 @@ type User = {
 type KakaoAuthResponse = {
   access_token: string;
   refresh_token: string;
+  expiresIn: number;
+  grantType: string;
   isNew: boolean;
   user: User;
 };
@@ -41,8 +43,8 @@ const KakaoLoginPage = () => {
         const token = {
           accessToken: data.access_token,
           refreshToken: data.refresh_token,
-          grantType: 'Bearer ',
-          expiresIn: 1234567, //추후 수정
+          grantType: data.grantType,
+          expiresIn: data.expiresIn,
         };
 
         console.log(token);
@@ -69,6 +71,7 @@ const KakaoLoginPage = () => {
           }}
           injectedJavaScript={injectedJavaScript}
           onMessage={getAccessToken}
+          onError={(e) => console.log('WebView error:', e.nativeEvent)}
         />
       ) : (
         <CustomText font={theme.fonts.bold28}>

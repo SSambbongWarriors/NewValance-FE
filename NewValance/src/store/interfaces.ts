@@ -1,10 +1,11 @@
 export interface NewsData {
-  id: number;
+  articleId: number;
   title: string;
-  thumbnail: string;
+  thumbnailUrl: string;
 }
 
 export interface NewsCategory {
-  category: string;
-  data: NewsData[];
+  categoryId: number;
+  categoryName: string;
+  newsList: NewsData[];
 }
