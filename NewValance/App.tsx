@@ -1,7 +1,7 @@
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { RecoilRoot } from 'recoil';
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import LandingPage from './src/pages/LandingPage';
@@ -15,7 +15,7 @@ import SearchPage from './src/pages/Main/SearchPage/SearchPage';
 import MyPage from './src/pages/My/MyPage/MyPage';
 import ProfileEditPage from './src/pages/My/ProfileEditPage/ProfileEditPage';
 import VideoPage from './src/pages/Video/VideoPage';
-import KaKaoLoginPage from './src/pages/Auth/KakaoLoginPage';
+import LoginWebViewPage from './src/pages/Auth/LoginWebViewPage';
 
 import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
@@ -62,6 +62,7 @@ const App = () => {
               <Stack.Screen name="Landing" component={LandingPage} />
 
               <Stack.Screen name="Login" component={LoginPage} />
+              <Stack.Screen name="LoginWebView" component={LoginWebViewPage} />
               <Stack.Screen name="Signin" component={SigninPage} />
 
               <Stack.Screen name="Category" component={CategoryPage} />
@@ -73,8 +74,6 @@ const App = () => {
               <Stack.Screen name="ProfileEdit" component={ProfileEditPage} />
 
               <Stack.Screen name="Video" component={VideoPage} />
-
-              <Stack.Screen name="Kakao" component={KaKaoLoginPage} />
             </Stack.Navigator>
           </NavigationContainer>
         </ThemeProvider>

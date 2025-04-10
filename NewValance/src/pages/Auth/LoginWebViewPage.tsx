@@ -23,7 +23,8 @@ type KakaoAuthResponse = {
   user: User;
 };
 
-const KakaoLoginPage = () => {
+const LoginWebViewPage = ({ route }: any) => {
+  const type = route.params.type;
   const navigate = useNavigation<StackNavigationProp<any>>();
   const [isParsed, setIsParsed] = useState<boolean>(false);
   const KAKAO_REDIRECT_URL = `${process.env.EXPO_PUBLIC_API_URL}/login/oauth2/code/kakao`;
@@ -60,34 +61,36 @@ const KakaoLoginPage = () => {
   };
 
   return (
-    <View style={Styles.container}>
+    <>
       {!isParsed ? (
         <WebView
           style={{ flex: 1 }}
           originWhitelist={['*']}
           scalesPageToFit={false}
           source={{
-            uri: `${process.env.EXPO_PUBLIC_API_URL}/oauth2/authorization/kakao`,
+            uri: `${process.env.EXPO_PUBLIC_API_URL}/oauth2/authorization/${type}`,
           }}
           injectedJavaScript={injectedJavaScript}
           onMessage={getAccessToken}
           onError={(e) => console.log('WebView error:', e.nativeEvent)}
         />
       ) : (
-        <CustomText font={theme.fonts.bold28}>
-          잠시만 기다려 주세요...
-        </CustomText>
+        <View style={Styles.container}>
+          <CustomText font={theme.fonts.bold28}>
+            잠시만 기다려 주세요...
+          </CustomText>
+        </View>
       )}
-    </View>
+    </>
   );
 };
 
-export default KakaoLoginPage;
+export default LoginWebViewPage;
 
 const Styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
   },
 });

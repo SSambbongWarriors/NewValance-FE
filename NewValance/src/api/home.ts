@@ -3,7 +3,6 @@ import { client } from './client';
 export const getHomeNews = async () => {
   try {
     const res = await client.get('api/news/home');
-    console.log(res.data);
     return res.data;
   } catch (error) {
     console.error(error);

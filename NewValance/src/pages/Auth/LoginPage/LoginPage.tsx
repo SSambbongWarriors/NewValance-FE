@@ -25,7 +25,9 @@ const LoginPage = () => {
         </S.Container>
         <S.ButtonContainer>
           <Pressable
-            onPress={() => navigate.navigate('Kakao')} /*카카오 로그인 버튼*/
+            onPress={() =>
+              navigate.navigate('LoginWebView', { type: 'kakao' })
+            } /*카카오 로그인 버튼*/
           >
             <S.KakaoButton
               source={require('../../../assets/images/LoginPage/kakao-login-icon.png')}
@@ -40,14 +42,18 @@ const LoginPage = () => {
           </S.TextContainer>
           <S.IconContainer>
             <Pressable
-              onPress={() => navigate.navigate('Home')} /*네이버 로그인 버튼*/
+              onPress={() =>
+                navigate.navigate('LoginWebView', { type: 'naver' })
+              } /*네이버 로그인 버튼*/
             >
               <S.CircleButton
                 source={require('../../../assets/images/LoginPage/naver-login-icon.png')}
               />
             </Pressable>
             <Pressable
-              onPress={() => navigate.navigate('Home')} /*구글 로그인 버튼*/
+              onPress={() =>
+                navigate.navigate('LoginWebView', { type: 'google' })
+              } /*구글 로그인 버튼*/
             >
               <S.CircleButton
                 source={require('../../../assets/images/LoginPage/google-login-icon.png')}
