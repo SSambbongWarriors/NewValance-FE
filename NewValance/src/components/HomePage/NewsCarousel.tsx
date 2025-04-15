@@ -6,6 +6,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { FlatList } from 'react-native';
 import { NewsData } from '../../store/interfaces';
 import { useEffect, useState } from 'react';
+import { getHomeBanner } from '../../api/home';
 
 const dummyCarouselData = [
   {
@@ -35,7 +36,18 @@ export const NewsCarousel = () => {
   const snapToOffsets = [0, offset, offset * 2];
 
   useEffect(() => {
+    const getNewsData = async () => {
+      try {
+        const res = await getHomeBanner();
+        if (res) {
+          setData(res);
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
     setData(dummyCarouselData);
+    getNewsData();
   }, []);
 
   return (
