@@ -52,7 +52,8 @@ const LoginPage = () => {
             </Pressable>
             <Pressable
               onPress={() =>
-                navigate.navigate('LoginWebView', { type: 'google' })
+                //navigate.navigate('LoginWebView', { type: 'google' })
+                navigate.navigate('SignIn')
               } /*구글 로그인 버튼*/
             >
               <S.CircleButton

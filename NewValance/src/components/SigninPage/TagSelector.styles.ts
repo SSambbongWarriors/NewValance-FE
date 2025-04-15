@@ -26,10 +26,11 @@ export const Tag = styled.Pressable`
 
   border-radius: 30px;
   border-width: 2px;
-  border-color: ${theme.colors.violet};
+  border-color: ${({ $isActive, $isFull }) =>
+    !$isActive && $isFull ? theme.colors.gray_3 : theme.colors.violet};
 
   margin-bottom: 8px;
 
   background-color: ${({ $isActive }) =>
-    $isActive ? theme.colors.violet : 'transparent'};
+    $isActive ? theme.colors.violet : theme.colors.white};
 `;

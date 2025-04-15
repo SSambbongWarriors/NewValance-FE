@@ -106,7 +106,9 @@ export const TagSelector = ({ tagList, setTagList }: TagSelectorProps) => {
       if (newSet.has(item)) {
         newSet.delete(item);
       } else {
-        newSet.add(item);
+        if (tagList.size < 5) {
+          newSet.add(item);
+        }
       }
       return new Set(newSet);
     });
@@ -136,6 +138,7 @@ export const TagSelector = ({ tagList, setTagList }: TagSelectorProps) => {
           <S.Tag
             key={item}
             $isActive={tagList.has(item)}
+            $isFull={tagList.size > 4}
             onPress={() => {
               toggleItem(item);
             }}
@@ -143,7 +146,11 @@ export const TagSelector = ({ tagList, setTagList }: TagSelectorProps) => {
             <CustomText
               font={theme.fonts.reg18}
               color={
-                tagList.has(item) ? theme.colors.white : theme.colors.violet
+                tagList.has(item)
+                  ? theme.colors.white
+                  : tagList.size < 5
+                  ? theme.colors.violet
+                  : theme.colors.gray_3
               }
             >
               {item}

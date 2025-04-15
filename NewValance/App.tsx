@@ -63,7 +63,7 @@ const App = () => {
 
               <Stack.Screen name="Login" component={LoginPage} />
               <Stack.Screen name="LoginWebView" component={LoginWebViewPage} />
-              <Stack.Screen name="Signin" component={SigninPage} />
+              <Stack.Screen name="SignIn" component={SigninPage} />
 
               <Stack.Screen name="Category" component={CategoryPage} />
               <Stack.Screen name="Edit" component={EditPage} />

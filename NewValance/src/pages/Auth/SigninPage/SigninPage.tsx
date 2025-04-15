@@ -8,6 +8,8 @@ import { NameInput } from '../../../components/SigninPage/NameInput';
 import { TagSelector } from '../../../components/SigninPage/TagSelector';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import Layout from '../../Layout';
+import { getIsDuplicated, signIn } from '../../../api/auth';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 const SigninPage = () => {
   const [passStage, setPassStage] = useState(false);
@@ -18,7 +20,7 @@ const SigninPage = () => {
   const [isDuplicated, setIsDuplicated] = useState(false);
 
   const [tagList, setTagList] = useState<Set<string>>(new Set<string>());
-  const navigate = useNavigation<NavigationProp<any>>();
+  const navigate = useNavigation<StackNavigationProp<any>>();
 
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -43,18 +45,42 @@ const SigninPage = () => {
       } else {
         setIsButtonActive(false);
       }
+
+      //if()
     }
   }, [tagList]);
 
-  const onPressButton = () => {
-    console.log('tlfgod');
-    if (!passStage) {
-      //닉네임 중복 검사 코드 추가
-      setPassStage(true);
+  const checkDuplicated = async () => {
+    try {
+      const res = await getIsDuplicated(name);
+      if (res.available) {
+        setPassStage(true);
+      } else {
+        setIsDuplicated(false);
+      }
       setIsButtonActive(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const postTagList = async () => {
+    const data = { username: name, tags: [...tagList] };
+    try {
+      const res = await signIn(data);
+      if (res?.status == 200) {
+        navigate.replace('Home');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const onPressButton = async () => {
+    if (!passStage) {
+      checkDuplicated();
     } else {
-      //선택 태그 전송 코드 추가
-      navigate.navigate('Home');
+      postTagList();
     }
   };
 
@@ -64,7 +90,7 @@ const SigninPage = () => {
         <S.SkipButton
           style={{ opacity: passStage ? 1 : 0 }}
           disabled={!passStage}
-          onPress={() => navigate.navigate('Home')}
+          onPress={onPressButton}
         >
           <CustomText font={theme.fonts.reg14} color={theme.colors.gray_4}>
             건너뛰고 시작하기

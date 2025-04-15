@@ -51,7 +51,12 @@ const LoginWebViewPage = ({ route }: any) => {
         console.log(token);
         await AsyncStorage.setItem('token', JSON.stringify(token));
         console.log('토큰 저장');
-        navigate.replace('Home');
+
+        if (data.isNew) {
+          navigate.replace('SignIn');
+        } else {
+          navigate.replace('Home');
+        }
       } else {
         console.log('🚨 토큰을 가져오지 못함:', data);
       }
