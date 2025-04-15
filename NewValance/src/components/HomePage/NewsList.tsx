@@ -9,6 +9,16 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { useEffect, useState } from 'react';
 import { getHomeNews } from '../../api/home';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { Pressable } from 'react-native-gesture-handler';
+
+const TypeMap = [
+  'politics',
+  'economy',
+  'international',
+  'culture',
+  'it',
+  'society',
+];
 
 export const NewsList = () => {
   const navigate = useNavigation<StackNavigationProp<any>>();
@@ -49,6 +59,10 @@ export const NewsList = () => {
     }
   }, [isFocused]);
 
+  const onPressNews = (catId: number, newsId: number) => {
+    navigate.navigate('Video', { type: TypeMap[catId - 1], newsId: newsId });
+  };
+
   return (
     <S.Container>
       {data?.map((cat) => (
@@ -73,14 +87,18 @@ export const NewsList = () => {
             decelerationRate="fast"
           >
             {cat.newsList.map((item) => (
-              <VideoThumbS
-                key={item.articleId}
-                title={item.title}
-                thumbnail={
-                  item.thumbnailUrl ||
-                  'https://imgnews.pstatic.net/image/445/2024/10/24/0000250511_001_20241024225012188.jpg?type=w647'
-                }
-              />
+              <Pressable
+                onPress={() => onPressNews(cat.categoryId, item.articleId)}
+              >
+                <VideoThumbS
+                  key={item.articleId}
+                  title={item.title}
+                  thumbnail={
+                    item.thumbnailUrl ||
+                    'https://imgnews.pstatic.net/image/445/2024/10/24/0000250511_001_20241024225012188.jpg?type=w647'
+                  }
+                />
+              </Pressable>
             ))}
           </S.NewsContainer>
         </S.CategoryContainer>

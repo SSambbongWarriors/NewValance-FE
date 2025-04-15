@@ -1,7 +1,7 @@
 import styled from 'styled-components/native';
 import { hp, wp } from '../../../styles/ResponsiveSize';
 
-export const ContainerS = styled.TouchableOpacity`
+export const ContainerS = styled.View`
   width: ${wp(106)}px;
   gap: ${hp(4)}px;
 `;
@@ -12,7 +12,7 @@ export const ThumbnailS = styled.Image`
   border-radius: ${wp(8)}px;
 `;
 
-export const ContainerL = styled.TouchableOpacity`
+export const ContainerL = styled.View`
   flex: 1;
   gap: ${hp(8)}px;
   flex-direction: row;

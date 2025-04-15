@@ -13,13 +13,14 @@ import { ThemeBox } from '../ThemeBox/ThemeBox';
 import { useNavigation } from '@react-navigation/native';
 import { Alert, BackHandler, Linking } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { VideoData } from '../../../store/interfaces';
 
 interface VideoPlayerProps {
-  src: string;
+  data: VideoData;
   isPlaying: boolean;
 }
 
-export const VideoPlayer = ({ src, isPlaying }: VideoPlayerProps) => {
+export const VideoPlayer = ({ data, isPlaying }: VideoPlayerProps) => {
   const [isPaused, setIsPaused] = useState(!isPlaying);
   const [isLiked, setIsLiked] = useState(false);
   const [isCommentActive, setIsCommentActive] = useRecoilState(commentState);
@@ -27,7 +28,7 @@ export const VideoPlayer = ({ src, isPlaying }: VideoPlayerProps) => {
 
   const navigate = useNavigation<StackNavigationProp<any>>();
 
-  const player = useVideoPlayer(src, (player) => {
+  const player = useVideoPlayer(data.videoVersions[1].videoUrl, (player) => {
     player.loop = true;
   });
 
@@ -57,10 +58,7 @@ export const VideoPlayer = ({ src, isPlaying }: VideoPlayerProps) => {
           setIsThemeActive(false);
           return true;
         } else {
-          navigate.reset({
-            index: 0,
-            routes: [{ name: 'Home' }],
-          });
+          navigate.goBack();
           return true;
         }
       }
@@ -91,7 +89,7 @@ export const VideoPlayer = ({ src, isPlaying }: VideoPlayerProps) => {
   };
 
   const handleNewsLink = async () => {
-    const url = 'https://www.ajunews.com/view/20241024212343156';
+    const url = data.originalUrl;
     const supported = await Linking.canOpenURL(url);
     if (supported) {
       await Linking.openURL(url);
@@ -140,7 +138,7 @@ export const VideoPlayer = ({ src, isPlaying }: VideoPlayerProps) => {
             numberOfLines={1}
             ellipsizeMode="tail"
           >
-            설 연휴 마지막 날 '한파'...아침 최저 -10도 안팎 강추위
+            {data.title}
           </CustomText>
         </S.Title>
         <S.LinkButton onPress={handleNewsLink}>

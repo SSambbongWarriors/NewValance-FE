@@ -14,3 +14,16 @@ export interface Category {
   id: number;
   name: string;
 }
+
+export interface VideoVersion {
+  versionName: string;
+  videoUrl: string;
+}
+
+export interface VideoData {
+  newsId: number;
+  title: string;
+  originalUrl: string;
+  thumbnailUrl: string;
+  videoVersions: VideoVersion[];
+}

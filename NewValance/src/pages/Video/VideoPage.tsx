@@ -3,11 +3,8 @@ import { VideoPlayer } from '../../components/VideoPage/VideoPlayer/VideoPlayer'
 import * as S from './VideoPage.styles';
 import { useRecoilValue } from 'recoil';
 import { commentState } from '../../store/videoState';
-
-interface VideoData {
-  id: number;
-  src: string;
-}
+import { getVideoData } from '../../api/video';
+import { VideoData } from '../../store/interfaces';
 
 const dummyData = [
   {
@@ -40,22 +37,42 @@ const dummyData = [
   },
 ];
 
-const VideoPage = () => {
+const VideoPage = ({ route }: any) => {
+  const type = route.params?.type || 'recommend';
   const [videos, setVideos] = useState<VideoData[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  const [nextNewsId, setNextNewsId] = useState<number | null>(null);
+  const [isFetching, setIsFetching] = useState(false);
   const isCommentActive = useRecoilValue(commentState);
 
+  const fetchVideoList = async (id: number | null) => {
+    if (isFetching) return;
+    setIsFetching(true);
+    try {
+      const res = await getVideoData(type, id);
+      if (res && res.news) {
+        setVideos((prev) => [...prev, ...res.news]);
+        setNextNewsId(res.nextNewsId);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setIsFetching(false);
+    }
+  };
+
   useEffect(() => {
-    setVideos(dummyData);
+    fetchVideoList(route.params?.newsId);
   }, []);
 
   return (
     <S.Container>
       <S.VideoList
         data={videos}
-        keyExtractor={(item: any) => item.id.toString()}
+        keyExtractor={(item: VideoData) => item.newsId.toString()}
         renderItem={({ item, index }: any) => (
-          <VideoPlayer src={item.src} isPlaying={index === currentIndex} />
+          <VideoPlayer data={item} isPlaying={index === currentIndex} />
         )}
         scrollEnabled={!isCommentActive}
         pagingEnabled={true}
@@ -67,7 +84,13 @@ const VideoPage = () => {
               event.nativeEvent.layoutMeasurement.width
           );
           setCurrentIndex(newIndex);
+          if (newIndex >= videos.length - 2 && nextNewsId) {
+            fetchVideoList(nextNewsId);
+          }
         }}
+        initialNumToRender={3}
+        windowSize={5}
+        removeClippedSubviews={true}
       />
     </S.Container>
   );
