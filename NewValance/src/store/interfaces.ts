@@ -9,3 +9,8 @@ export interface NewsCategory {
   categoryName: string;
   newsList: NewsData[];
 }
+
+export interface Category {
+  id: number;
+  name: string;
+}

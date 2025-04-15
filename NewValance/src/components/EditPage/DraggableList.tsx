@@ -5,10 +5,11 @@ import theme from '../../styles/theme';
 import ListIcon from '../../assets/images/list.svg';
 
 import DragList, { DragListRenderItemInfo } from 'react-native-draglist';
+import { Category } from '../../store/interfaces';
 
 interface DraggableListProps {
-  data: Array<string>;
-  setData: React.Dispatch<React.SetStateAction<string[]>>;
+  data: Array<Category>;
+  setData: React.Dispatch<React.SetStateAction<Category[]>>;
 }
 
 export const DraggableList = ({ data, setData }: DraggableListProps) => {
@@ -23,20 +24,22 @@ export const DraggableList = ({ data, setData }: DraggableListProps) => {
     );
   };
 
-  async function onReordered(fromIndex: number, toIndex: number) {
-    const finalIndex = fromIndex < toIndex ? toIndex - 1 : toIndex;
-    const copy = [...data];
-    const removed = copy.splice(fromIndex, 1);
+  const onReordered = async (fromIndex: number, toIndex: number) => {
+    const nameList = data.map((item) => item.name);
+    const [moved] = nameList.splice(fromIndex, 1);
+    nameList.splice(toIndex, 0, moved);
 
-    copy.splice(finalIndex, 0, removed[0]);
-    setData(copy);
-  }
+    const reordered = nameList.map(
+      (name) => data.find((c) => c.name === name)!
+    );
+    setData(reordered);
+  };
 
   return (
     <S.Container>
       <DragList
         contentContainerStyle={{ gap: 12 }}
-        data={data}
+        data={data.map((item) => item.name)}
         keyExtractor={(item) => `draggable-item-${item}`}
         onReordered={onReordered}
         renderItem={renderItem}

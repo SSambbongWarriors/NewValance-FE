@@ -13,14 +13,14 @@ const dummyData = Array.from({ length: 30 }, (_, i) => ({
 }));
 
 const CategoryPage = ({ route }: any) => {
-  const { cat } = route.params;
+  const { catId, catName } = route.params;
   return (
     <Layout>
       <S.Container>
         <S.Header>
-          <CustomText font={theme.fonts.bold28}>{cat}</CustomText>
+          <CustomText font={theme.fonts.bold28}>{catName}</CustomText>
         </S.Header>
-        <VerticalVideoList data={dummyData} />
+        <VerticalVideoList catId={catId} />
       </S.Container>
     </Layout>
   );
