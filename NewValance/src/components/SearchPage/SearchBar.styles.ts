@@ -22,6 +22,6 @@ export const Container = styled.View`
 
 export const TextInput = styled.TextInput`
   flex: 1;
-  ${theme.fonts.reg18}
+  ${theme.fonts.reg14}
   color: ${theme.colors.black_1};
 `;

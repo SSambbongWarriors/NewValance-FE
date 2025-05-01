@@ -7,6 +7,8 @@ import { DraggableList } from '../../../components/EditPage/DraggableList';
 import { useEffect, useState } from 'react';
 import { Category } from '../../../store/interfaces';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 const EditPage = () => {
   const [catList, setCatList] = useState<Array<Category>>([
@@ -36,6 +38,8 @@ const EditPage = () => {
     },
   ]);
 
+  const navigate = useNavigation<StackNavigationProp<any>>();
+
   useEffect(() => {
     const getCatOrder = async () => {
       const res = await AsyncStorage.getItem('cat-order');
@@ -53,7 +57,7 @@ const EditPage = () => {
   const saveCatOrder = async () => {
     try {
       await AsyncStorage.setItem('cat-order', JSON.stringify(catList));
-      console.log('저장');
+      navigate.goBack();
     } catch (error) {
       console.error(error);
     }

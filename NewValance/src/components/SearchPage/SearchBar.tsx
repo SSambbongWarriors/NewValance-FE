@@ -2,7 +2,6 @@ import * as S from './SearchBar.styles';
 import SearchIcon from '../../assets/images/search-icon.svg';
 import theme from '../../styles/theme';
 import { useState } from 'react';
-import { Text } from 'react-native';
 
 interface SearchBarProps {
   setIsSearched: React.Dispatch<React.SetStateAction<boolean>>;
