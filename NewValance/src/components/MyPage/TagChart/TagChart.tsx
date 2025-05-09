@@ -5,34 +5,60 @@ import * as S from './TagChart.styles';
 
 import { forceSimulation, forceCollide, forceX, forceY } from 'd3-force';
 import Svg, { Circle, Text } from 'react-native-svg';
+import { KeywordType } from '../../../pages/My/MyPage/MyPage';
+
+interface ColoredKeywordType extends KeywordType {
+  color: string;
+}
 
 interface BubbleType {
-  name: string;
-  value: number;
+  keyword: string;
+  weight: number;
   color: string;
   r: number;
   x: number;
   y: number;
 }
 
-const data = [
-  { name: '인공지능', value: 130, color: '#8B5CF6' },
-  { name: '대통령', value: 100, color: '#FACC15' },
-  { name: '세금', value: 30, color: '#3B82F6' },
-  { name: '보수', value: 50, color: '#EF4444' },
-  { name: '주식', value: 25, color: '#EC4899' },
-];
+const colorPalette = ['#8B5CF6', '#FACC15', '#3B82F6', '#EF4444', '#EC4899'];
 
 const width = 300,
   height = 200;
 
-export const TagChart = () => {
+export const TagChart = ({
+  userKeywords,
+}: {
+  userKeywords: Array<KeywordType>;
+}) => {
+  const [coloredData, setColoredData] = useState<Array<ColoredKeywordType>>([]);
   const [bubbles, setBubbles] = useState<BubbleType[]>([]);
 
   useEffect(() => {
-    let nodes = data.map((item) => ({
+    const coloredData = userKeywords.map((item, index) => ({
       ...item,
-      r: Math.sqrt(item.value) * 5,
+      color: colorPalette[index],
+    }));
+
+    setColoredData(coloredData);
+  }, [userKeywords]);
+
+  useEffect(() => {
+    const weights = coloredData.map((item) => item.weight);
+    const minWeight = Math.min(...weights);
+    const maxWeight = Math.max(...weights);
+    const minR = 10;
+    const maxR = 65;
+
+    const scaleRadius = (weight: number) => {
+      if (maxWeight === minWeight) return (minR + maxR) / 2;
+      return (
+        ((weight - minWeight) / (maxWeight - minWeight)) * (maxR - minR) + minR
+      );
+    };
+
+    let nodes = coloredData.map((item) => ({
+      ...item,
+      r: scaleRadius(item.weight),
       x: Math.random() * width,
       y: Math.random() * height,
     }));
@@ -57,7 +83,7 @@ export const TagChart = () => {
         forceBoundary();
         setBubbles([...nodes]);
       }); // 값 업데이트
-  }, []);
+  }, [coloredData]);
 
   return (
     <S.Container>
@@ -83,7 +109,7 @@ export const TagChart = () => {
                 fontFamily="Pretendard-Bold"
                 fill="white"
               >
-                {bubble.name}
+                {bubble.keyword}
               </Text>
             </React.Fragment>
           ))}

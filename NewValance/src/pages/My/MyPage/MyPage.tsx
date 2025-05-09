@@ -6,19 +6,69 @@ import { CustomText } from '../../../components/common/CustomText';
 import theme from '../../../styles/theme';
 import { ViewChart } from '../../../components/MyPage/ViewChart/ViewChart';
 import { TagChart } from '../../../components/MyPage/TagChart/TagChart';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   LogoutModal,
   SignOutModal,
 } from '../../../components/MyPage/Modal/Modal';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { getUserProfile } from '../../../api/profile';
+
+interface userProfileType {
+  username: string;
+  profileImgUrl: string;
+}
+
+export interface userViewType {
+  todayViews: number;
+  totalViews: number;
+}
+
+export interface KeywordType {
+  keyword: string;
+  weight: number;
+}
 
 const MyPage = () => {
   const [isModalActive, setIsModalActive] = useState<
     false | 'logout' | 'signout'
   >(false);
 
+  const [userProfile, setUserProfile] = useState<userProfileType>({
+    username: '',
+    profileImgUrl: '',
+  });
+  const [userView, setUserView] = useState<userViewType>({
+    todayViews: 0,
+    totalViews: 0,
+  });
+  const [userKeywords, setUserKeywords] = useState<Array<KeywordType>>([]);
+
   const navigate = useNavigation<NavigationProp<any>>();
+
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const res = await getUserProfile();
+        if (res) {
+          setUserProfile({
+            username: res.username,
+            profileImgUrl: res.profileImgUrl,
+          });
+          setUserView({
+            todayViews: res.todayViews,
+            totalViews: res.totalViews,
+          });
+          setUserKeywords(res.preferredKeywords);
+        }
+        console.log(res);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getUserData();
+  }, []);
 
   return (
     <Layout>
@@ -30,11 +80,11 @@ const MyPage = () => {
         <S.ContentContainer>
           <S.ProfileContainer>
             <CustomText font={theme.fonts.bold32} color={theme.colors.white}>
-              님을베려하는마음
+              {userProfile?.username}
             </CustomText>
             <S.ProfileImage
               source={{
-                uri: 'https://i.pinimg.com/736x/ae/36/d7/ae36d717ce897e031cc8e4d03081cb2e.jpg',
+                uri: userProfile?.profileImgUrl,
               }}
             />
           </S.ProfileContainer>
@@ -44,8 +94,8 @@ const MyPage = () => {
             </CustomText>
             <SettingIcon onPress={() => navigate.navigate('ProfileEdit')} />
           </S.TextContainer>
-          <ViewChart />
-          <TagChart />
+          <ViewChart userView={userView} />
+          <TagChart userKeywords={userKeywords} />
           <S.Line />
           <S.TextButtonContainer>
             <CustomText

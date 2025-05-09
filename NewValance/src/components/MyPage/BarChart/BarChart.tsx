@@ -8,14 +8,10 @@ import {
   NativeSyntheticEvent,
   View,
 } from 'react-native';
+import { ViewData } from '../ViewChart/ViewChart';
 
 interface ChartProps {
-  data: PureData[][];
-}
-
-interface PureData {
-  date: string;
-  value: number;
+  data: ViewData[][];
 }
 
 interface ChartData {
@@ -39,14 +35,15 @@ const formatDay = (dateStr: string) => {
 const PAGE_WIDTH = 300;
 
 export const BarChart = ({ data }: ChartProps) => {
-  const [pureData, setPureData] = useState<PureData[][]>(data);
   const [chartData, setChartData] = useState<ChartData[][]>([]);
   const [weekSum, setWeekSum] = useState<number>(0);
   const [selected, setSelected] = useState<number | null>(6);
+  const [containerWidth, setContainerWidth] = useState(0);
 
   useEffect(() => {
     const calculateData = () => {
-      const newChartData = pureData.map((pageData, index) => {
+      console.log(data);
+      const newChartData = data.map((pageData, index) => {
         const standard = Math.max(
           ...pageData.map((singleData) => singleData.value)
         );
@@ -61,15 +58,15 @@ export const BarChart = ({ data }: ChartProps) => {
 
       setChartData(newChartData);
 
-      const firstWeekSum = chartData[0].reduce(
+      const firstWeekSum = chartData[0]?.reduce(
         (sum, item) => sum + item.value,
         0
       );
-      setWeekSum(firstWeekSum);
+      setWeekSum(firstWeekSum | 0);
     };
 
     calculateData();
-  }, [pureData]);
+  }, [data]);
 
   const getWeekSum = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetX = event.nativeEvent.contentOffset.x;
@@ -78,7 +75,7 @@ export const BarChart = ({ data }: ChartProps) => {
 
     const pageIndex = totalPages - 1 - page;
     if (chartData[pageIndex]) {
-      const newWeekSum = chartData[pageIndex].reduce(
+      const newWeekSum = chartData[pageIndex]?.reduce(
         (sum, item) => sum + item.value,
         0
       );
@@ -91,48 +88,50 @@ export const BarChart = ({ data }: ChartProps) => {
       <S.NumberWrapper>
         <CustomText font={theme.fonts.bold32}>{weekSum}</CustomText>
       </S.NumberWrapper>
-      <FlatList
-        data={chartData}
-        keyExtractor={(_, index) => index.toString()}
-        contentContainerStyle={{
-          minWidth: '100%',
-          height: 190,
-        }}
-        renderItem={({ item, index }) => (
-          <S.Container>
-            {item.map((item, idx) => (
-              <S.ChartData key={idx} onPress={() => setSelected(idx)}>
-                <View style={{ display: selected === idx ? 'flex' : 'none' }}>
+      <View onLayout={(e) => setContainerWidth(e.nativeEvent.layout.width)}>
+        <FlatList
+          data={chartData}
+          keyExtractor={(_, index) => index.toString()}
+          contentContainerStyle={{
+            height: 190,
+          }}
+          renderItem={({ item, index }) => (
+            <S.Container style={{ width: containerWidth }}>
+              {item.reverse().map((item, idx) => (
+                <S.ChartData key={idx} onPress={() => setSelected(idx)}>
+                  <View style={{ display: selected === idx ? 'flex' : 'none' }}>
+                    <CustomText
+                      font={theme.fonts.bold14}
+                      color={theme.colors.violet}
+                    >
+                      {item.value}
+                    </CustomText>
+                  </View>
+                  <S.Bar $height={item.height} />
                   <CustomText
-                    font={theme.fonts.bold14}
-                    color={theme.colors.violet}
+                    font={theme.fonts.reg12}
+                    color={theme.colors.gray_4}
                   >
-                    {item.value}
+                    {item.date}
                   </CustomText>
-                </View>
-                <S.Bar $height={item.height} />
-                <CustomText
-                  font={theme.fonts.reg12}
-                  color={theme.colors.gray_4}
-                >
-                  {item.date}
-                </CustomText>
-                <CustomText
-                  font={theme.fonts.reg12}
-                  color={theme.colors.gray_4}
-                >
-                  {item.day}
-                </CustomText>
-              </S.ChartData>
-            ))}
-          </S.Container>
-        )}
-        onScroll={getWeekSum}
-        pagingEnabled
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        inverted
-      />
+                  <CustomText
+                    font={theme.fonts.reg12}
+                    color={theme.colors.gray_4}
+                  >
+                    {item.day}
+                  </CustomText>
+                </S.ChartData>
+              ))}
+            </S.Container>
+          )}
+          //snapToInterval={containerWidth}
+          onScroll={getWeekSum}
+          pagingEnabled
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          inverted
+        />
+      </View>
     </>
   );
 };
