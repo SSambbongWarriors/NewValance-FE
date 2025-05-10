@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { client } from './client';
+import axios from 'axios';
 
 interface SignInProps {
   username: string;
@@ -14,6 +15,11 @@ export const getIsDuplicated = async (name: string) => {
     //console.log(res);
     return res.data;
   } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.response?.status === 409) {
+        return { available: false }; // 409 → 이미 사용 중
+      }
+    }
     console.error(error);
   }
 };
