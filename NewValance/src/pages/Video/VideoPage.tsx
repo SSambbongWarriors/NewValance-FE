@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { VideoPlayer } from '../../components/VideoPage/VideoPlayer/VideoPlayer';
 import * as S from './VideoPage.styles';
 import { useRecoilValue } from 'recoil';
@@ -66,14 +66,19 @@ const VideoPage = ({ route }: any) => {
     fetchVideoList(route.params?.newsId);
   }, []);
 
+  const renderVideoItem = useCallback(
+    ({ item, index }: any) => (
+      <VideoPlayer data={item} isPlaying={index === currentIndex} />
+    ),
+    [currentIndex]
+  );
+
   return (
     <S.Container>
       <S.VideoList
         data={videos}
         keyExtractor={(item: VideoData) => item.newsId.toString()}
-        renderItem={({ item, index }: any) => (
-          <VideoPlayer data={item} isPlaying={index === currentIndex} />
-        )}
+        renderItem={renderVideoItem}
         scrollEnabled={!isCommentActive}
         pagingEnabled={true}
         horizontal
@@ -83,13 +88,16 @@ const VideoPage = ({ route }: any) => {
             event.nativeEvent.contentOffset.x /
               event.nativeEvent.layoutMeasurement.width
           );
+          console.log(newIndex);
           setCurrentIndex(newIndex);
           if (newIndex >= videos.length - 2 && nextNewsId) {
+            console.log('영상 추가 요청');
             fetchVideoList(nextNewsId);
           }
         }}
-        initialNumToRender={3}
-        windowSize={5}
+        initialNumToRender={2}
+        windowSize={3}
+        maxToRenderPerBatch={2}
         removeClippedSubviews={true}
       />
     </S.Container>

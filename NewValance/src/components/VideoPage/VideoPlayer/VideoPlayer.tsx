@@ -14,6 +14,9 @@ import { useNavigation } from '@react-navigation/native';
 import { Alert, BackHandler, Linking } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { VideoData } from '../../../store/interfaces';
+import { postVideoComplete } from '../../../api/video';
+import { useEvent } from 'expo';
+import { postLike } from '../../../api/interaction';
 
 interface VideoPlayerProps {
   data: VideoData;
@@ -21,32 +24,52 @@ interface VideoPlayerProps {
 }
 
 export const VideoPlayer = ({ data, isPlaying }: VideoPlayerProps) => {
-  const [isPaused, setIsPaused] = useState(!isPlaying);
-  const [isLiked, setIsLiked] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const [isLiked, setIsLiked] = useState(data.liked);
   const [isCommentActive, setIsCommentActive] = useRecoilState(commentState);
   const [isThemeActive, setIsThemeActive] = useRecoilState(themeState);
+  const [watched, setWatched] = useState<boolean>(false);
 
   const navigate = useNavigation<StackNavigationProp<any>>();
 
   const player = useVideoPlayer(data.videoVersions[1].videoUrl, (player) => {
     player.loop = true;
+    player.timeUpdateEventInterval = 1;
   });
 
   useEffect(() => {
-    if (!isPlaying) {
-      player.pause();
-    } else {
-      player.replay();
-    }
-  }, [isPlaying]);
+    const listener = player.addListener('timeUpdate', (event) => {
+      const currentTime = event.currentTime;
+      const duration = player.duration;
+
+      if (duration > 0 && currentTime / duration >= 0.6 && !watched) {
+        setWatched(true);
+        postVideoComplete(data.newsId);
+      }
+    });
+
+    return () => {
+      listener?.remove();
+    };
+  }, []);
 
   useEffect(() => {
-    if (isPaused) {
-      player.pause();
-    } else {
+    const shouldPlay = isPlaying && !isPaused;
+
+    if (shouldPlay) {
       player.play();
+    } else {
+      player.pause();
     }
-  }, [isPaused]);
+  }, [isPlaying, isPaused]);
+
+  // useEffect(() => {
+  //   if (isPaused) {
+  //     player.pause();
+  //   } else {
+  //     player.play();
+  //   }
+  // }, [isPaused]);
 
   useEffect(() => {
     const backAction = () => {
@@ -84,8 +107,13 @@ export const VideoPlayer = ({ data, isPlaying }: VideoPlayerProps) => {
     setIsThemeActive((prev) => !prev);
   };
 
-  const handleLiked = () => {
-    setIsLiked((prev) => !prev);
+  const handleLiked = async () => {
+    try {
+      const res = await postLike(data.newsId);
+      setIsLiked(res.liked);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleNewsLink = async () => {
@@ -148,7 +176,7 @@ export const VideoPlayer = ({ data, isPlaying }: VideoPlayerProps) => {
           <S.Arrow />
         </S.LinkButton>
       </S.InfoContainer>
-      <CommentBox />
+      <CommentBox newsId={data.newsId} />
       <ThemeBox />
     </S.Container>
   );

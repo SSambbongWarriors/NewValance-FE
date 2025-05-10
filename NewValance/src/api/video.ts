@@ -28,3 +28,13 @@ export const getVideoData = async (type: string, newsId: number | null) => {
     console.error(error);
   }
 };
+
+export const postVideoComplete = async (newsId: number) => {
+  try {
+    console.log('시청 완료');
+    const res = await client.post(`/api/video/${newsId}/complete`);
+    console.log(res.data);
+  } catch (error) {
+    console.error(error);
+  }
+};
