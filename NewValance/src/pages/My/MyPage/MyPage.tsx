@@ -13,11 +13,7 @@ import {
 } from '../../../components/MyPage/Modal/Modal';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { getUserProfile } from '../../../api/profile';
-
-interface userProfileType {
-  username: string;
-  profileImgUrl: string;
-}
+import { useUser } from '../../../hooks/useUser';
 
 export interface userViewType {
   todayViews: number;
@@ -34,10 +30,6 @@ const MyPage = () => {
     false | 'logout' | 'signout'
   >(false);
 
-  const [userProfile, setUserProfile] = useState<userProfileType>({
-    username: '',
-    profileImgUrl: '',
-  });
   const [userView, setUserView] = useState<userViewType>({
     todayViews: 0,
     totalViews: 0,
@@ -45,16 +37,13 @@ const MyPage = () => {
   const [userKeywords, setUserKeywords] = useState<Array<KeywordType>>([]);
 
   const navigate = useNavigation<NavigationProp<any>>();
+  const { user } = useUser();
 
   useEffect(() => {
     const getUserData = async () => {
       try {
         const res = await getUserProfile();
         if (res) {
-          setUserProfile({
-            username: res.username,
-            profileImgUrl: res.profileImgUrl,
-          });
           setUserView({
             todayViews: res.todayViews,
             totalViews: res.totalViews,
@@ -80,11 +69,11 @@ const MyPage = () => {
         <S.ContentContainer>
           <S.ProfileContainer>
             <CustomText font={theme.fonts.bold32} color={theme.colors.white}>
-              {userProfile?.username}
+              {user?.username}
             </CustomText>
             <S.ProfileImage
               source={{
-                uri: userProfile?.profileImgUrl,
+                uri: user?.profileImgUrl,
               }}
             />
           </S.ProfileContainer>

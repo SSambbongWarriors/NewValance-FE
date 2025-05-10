@@ -1,5 +1,5 @@
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { RecoilRoot } from 'recoil';
+import { RecoilRoot, useRecoilState } from 'recoil';
 
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
@@ -21,13 +21,25 @@ import * as Font from 'expo-font';
 import * as SplashScreen from 'expo-splash-screen';
 import { ThemeProvider } from 'styled-components';
 import theme from './src/styles/theme';
+import { useUser } from './src/hooks/useUser';
 
 const Stack = createStackNavigator();
 
 SplashScreen.preventAutoHideAsync();
 
 const App = () => {
+  return (
+    <RecoilRoot>
+      <AppContent />
+    </RecoilRoot>
+  );
+};
+
+export default App;
+
+const AppContent = () => {
   const [fontsLoaded, setFontsLoaded] = useState<boolean>(false);
+  const { loadUser } = useUser();
 
   useEffect(() => {
     const getFont = async () => {
@@ -38,6 +50,10 @@ const App = () => {
       setFontsLoaded(true);
     };
     getFont();
+  }, []);
+
+  useEffect(() => {
+    loadUser(); // 앱 시작 시 유저 정보 로드
   }, []);
 
   const onLayoutRootView = () => {
@@ -52,34 +68,30 @@ const App = () => {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }} onLayout={onLayoutRootView}>
-      <RecoilRoot>
-        <ThemeProvider theme={theme}>
-          <NavigationContainer>
-            <Stack.Navigator
-              initialRouteName="Landing"
-              screenOptions={{ headerShown: false, animation: 'none' }}
-            >
-              <Stack.Screen name="Landing" component={LandingPage} />
+      <ThemeProvider theme={theme}>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="Landing"
+            screenOptions={{ headerShown: false, animation: 'none' }}
+          >
+            <Stack.Screen name="Landing" component={LandingPage} />
 
-              <Stack.Screen name="Login" component={LoginPage} />
-              <Stack.Screen name="LoginWebView" component={LoginWebViewPage} />
-              <Stack.Screen name="SignIn" component={SigninPage} />
+            <Stack.Screen name="Login" component={LoginPage} />
+            <Stack.Screen name="LoginWebView" component={LoginWebViewPage} />
+            <Stack.Screen name="SignIn" component={SigninPage} />
 
-              <Stack.Screen name="Category" component={CategoryPage} />
-              <Stack.Screen name="Edit" component={EditPage} />
-              <Stack.Screen name="Home" component={HomePage} />
-              <Stack.Screen name="Likes" component={LikesPage} />
-              <Stack.Screen name="Search" component={SearchPage} />
-              <Stack.Screen name="My" component={MyPage} />
-              <Stack.Screen name="ProfileEdit" component={ProfileEditPage} />
+            <Stack.Screen name="Category" component={CategoryPage} />
+            <Stack.Screen name="Edit" component={EditPage} />
+            <Stack.Screen name="Home" component={HomePage} />
+            <Stack.Screen name="Likes" component={LikesPage} />
+            <Stack.Screen name="Search" component={SearchPage} />
+            <Stack.Screen name="My" component={MyPage} />
+            <Stack.Screen name="ProfileEdit" component={ProfileEditPage} />
 
-              <Stack.Screen name="Video" component={VideoPage} />
-            </Stack.Navigator>
-          </NavigationContainer>
-        </ThemeProvider>
-      </RecoilRoot>
+            <Stack.Screen name="Video" component={VideoPage} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ThemeProvider>
     </GestureHandlerRootView>
   );
 };
-
-export default App;

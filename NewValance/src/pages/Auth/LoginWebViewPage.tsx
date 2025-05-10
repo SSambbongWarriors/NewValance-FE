@@ -6,12 +6,14 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { CustomText } from '../../components/common/CustomText';
 import theme from '../../styles/theme';
+import { useUser } from '../../hooks/useUser';
+import { UserType } from '../../store/userState';
 
 type User = {
-  email: string | null;
-  profileImage: string | null;
-  userId: number | null;
-  username: string | null;
+  email: string;
+  profileImage: string;
+  userId: number;
+  username: string;
 };
 
 type KakaoAuthResponse = {
@@ -24,6 +26,7 @@ type KakaoAuthResponse = {
 };
 
 const LoginWebViewPage = ({ route }: any) => {
+  const { saveUser } = useUser();
   const type = route.params.type;
   const navigate = useNavigation<StackNavigationProp<any>>();
   const [isParsed, setIsParsed] = useState<boolean>(false);
@@ -51,6 +54,14 @@ const LoginWebViewPage = ({ route }: any) => {
         console.log(token);
         await AsyncStorage.setItem('token', JSON.stringify(token));
         console.log('토큰 저장');
+
+        const newUser: UserType = {
+          username: data.user.username,
+          profileImgUrl: data.user.profileImage,
+        };
+        saveUser(newUser);
+        await AsyncStorage.setItem('user', JSON.stringify(newUser));
+        console.log('유저 정보 저장');
 
         if (data.isNew) {
           navigate.replace('SignIn');
