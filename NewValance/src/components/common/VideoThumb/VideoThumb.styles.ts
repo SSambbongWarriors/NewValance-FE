@@ -13,12 +13,23 @@ export const ThumbnailS = styled.Image`
 `;
 
 export const ContainerL = styled.View`
+  width: ${wp(160)}px;
+  gap: ${hp(8)}px;
+`;
+
+export const ThumbnailL = styled.Image`
+  width: ${wp(164)}px;
+  height: ${hp(235)}px;
+  border-radius: ${wp(10)}px;
+`;
+
+export const ContainerR = styled.View`
   flex: 1;
   gap: ${hp(8)}px;
   flex-direction: row;
 `;
 
-export const ThumbnailL = styled.Image`
+export const ThumbnailR = styled.Image`
   width: ${wp(80)}px;
   height: ${hp(120)}px;
   border-radius: ${wp(8)}px;

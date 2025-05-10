@@ -27,6 +27,22 @@ export const VideoThumbL = ({ title, thumbnail }: VideoThumbProps) => {
   return (
     <S.ContainerL>
       <S.ThumbnailL source={{ uri: thumbnail }} resizeMode="cover" />
+      <CustomText
+        font={theme.fonts.bold18}
+        color={theme.colors.black_1}
+        numberOfLines={2}
+        ellipsizeMode="tail"
+      >
+        {title}
+      </CustomText>
+    </S.ContainerL>
+  );
+};
+
+export const VideoThumbR = ({ title, thumbnail }: VideoThumbProps) => {
+  return (
+    <S.ContainerR>
+      <S.ThumbnailR source={{ uri: thumbnail }} resizeMode="cover" />
       <S.TextWrapper>
         <CustomText
           font={theme.fonts.bold18}
@@ -37,6 +53,6 @@ export const VideoThumbL = ({ title, thumbnail }: VideoThumbProps) => {
           {title}
         </CustomText>
       </S.TextWrapper>
-    </S.ContainerL>
+    </S.ContainerR>
   );
 };

@@ -1,6 +1,6 @@
 import { FlatList, Pressable } from 'react-native';
 import { NewsData } from '../../../store/interfaces';
-import { VideoThumbL } from '../VideoThumb/VideoThumb';
+import { VideoThumbL, VideoThumbR } from '../VideoThumb/VideoThumb';
 import { useEffect, useState } from 'react';
 import { getCategoryNews } from '../../../api/video';
 import { useNavigation } from '@react-navigation/native';
@@ -57,7 +57,7 @@ export const VerticalVideoList = ({ catId }: VerticalVideoList) => {
       data={data}
       renderItem={({ item }: { item: NewsData }) => (
         <Pressable onPress={() => onPressNews(item.articleId)}>
-          <VideoThumbL
+          <VideoThumbR
             title={item.title}
             thumbnail={
               item.thumbnailUrl ||

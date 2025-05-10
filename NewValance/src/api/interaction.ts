@@ -37,3 +37,12 @@ export const postLike = async (newsId: number) => {
     console.error(error);
   }
 };
+
+export const getLikedList = async (page: number, size: number) => {
+  try {
+    const res = await client.get(`api/user/liked?page=${page}&size=${size}`);
+    return res.data;
+  } catch (error) {
+    console.error(error);
+  }
+};
