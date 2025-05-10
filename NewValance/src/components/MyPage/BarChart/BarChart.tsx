@@ -36,16 +36,17 @@ const PAGE_WIDTH = 300;
 
 export const BarChart = ({ data }: ChartProps) => {
   const [chartData, setChartData] = useState<ChartData[][]>([]);
-  const [weekSum, setWeekSum] = useState<number>(0);
+  const [weekSums, setWeekSums] = useState<number[]>([]);
   const [selected, setSelected] = useState<number | null>(6);
   const [containerWidth, setContainerWidth] = useState(0);
+  const [pageIndex, setPageIndex] = useState(0);
 
   useEffect(() => {
     const calculateData = () => {
       console.log(data);
       const newChartData = data.map((pageData, index) => {
         const standard = Math.max(
-          ...pageData.map((singleData) => singleData.value)
+          ...pageData.reverse().map((singleData) => singleData.value)
         );
 
         return pageData.map((item) => ({
@@ -56,37 +57,37 @@ export const BarChart = ({ data }: ChartProps) => {
         }));
       });
 
-      setChartData(newChartData);
+      const newWeekSums = data
+        .map((pageData) => pageData.reduce((sum, item) => sum + item.value, 0))
+        .reverse();
 
-      const firstWeekSum = chartData[0]?.reduce(
-        (sum, item) => sum + item.value,
-        0
-      );
-      setWeekSum(firstWeekSum | 0);
+      setChartData(newChartData);
+      setWeekSums(newWeekSums);
+      setPageIndex(newChartData.length - 1);
     };
 
     calculateData();
   }, [data]);
 
-  const getWeekSum = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+  const onScrollChart = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const offsetX = event.nativeEvent.contentOffset.x;
     const page = Math.round(offsetX / PAGE_WIDTH);
     const totalPages = chartData.length;
 
-    const pageIndex = totalPages - 1 - page;
-    if (chartData[pageIndex]) {
-      const newWeekSum = chartData[pageIndex]?.reduce(
-        (sum, item) => sum + item.value,
-        0
-      );
-      setWeekSum(newWeekSum);
-    }
+    const newPageIndex = totalPages - 1 - page;
+    setPageIndex(newPageIndex);
+
+    // if (weekSums[pageIndex] !== undefined) {
+    //   setWeekSums(weekSums[pageIndex]);
+    // }
   };
 
   return (
     <>
       <S.NumberWrapper>
-        <CustomText font={theme.fonts.bold32}>{weekSum}</CustomText>
+        <CustomText font={theme.fonts.bold32}>
+          {weekSums[pageIndex] ?? 0}
+        </CustomText>
       </S.NumberWrapper>
       <View onLayout={(e) => setContainerWidth(e.nativeEvent.layout.width)}>
         <FlatList
@@ -97,7 +98,7 @@ export const BarChart = ({ data }: ChartProps) => {
           }}
           renderItem={({ item, index }) => (
             <S.Container style={{ width: containerWidth }}>
-              {item.reverse().map((item, idx) => (
+              {item.map((item, idx) => (
                 <S.ChartData key={idx} onPress={() => setSelected(idx)}>
                   <View style={{ display: selected === idx ? 'flex' : 'none' }}>
                     <CustomText
@@ -124,8 +125,7 @@ export const BarChart = ({ data }: ChartProps) => {
               ))}
             </S.Container>
           )}
-          //snapToInterval={containerWidth}
-          onScroll={getWeekSum}
+          onScroll={onScrollChart}
           pagingEnabled
           horizontal
           showsHorizontalScrollIndicator={false}
