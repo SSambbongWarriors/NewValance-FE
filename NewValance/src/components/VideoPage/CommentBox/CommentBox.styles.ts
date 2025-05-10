@@ -15,7 +15,7 @@ export const CommentContainer = styled.View`
 
 export const CommentList = styled.FlatList`
   flex: 1;
-  margin-top: 8px;
+  margin-top: 12px;
 `;
 
 export const InputContainer = styled.View`

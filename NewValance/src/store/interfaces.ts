@@ -26,4 +26,5 @@ export interface VideoData {
   originalUrl: string;
   thumbnailUrl: string;
   videoVersions: VideoVersion[];
+  liked: boolean;
 }

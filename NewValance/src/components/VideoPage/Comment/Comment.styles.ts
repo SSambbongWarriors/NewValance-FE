@@ -23,8 +23,8 @@ export const PressArea = styled.Pressable`
 `;
 
 export const ProfileImage = styled.Image`
-  width: 48px;
-  height: 48px;
+  width: 45px;
+  height: 45px;
   border-radius: 48px;
   flex-shrink: 0;
 `;
@@ -35,8 +35,10 @@ export const TextContainer = styled.View`
   width: ${Dimensions.get('window').width - 92}px;
 `;
 
-export const DeleteIcon = styled(DeleteButtonIcon)`
+export const DeleteButton = styled.Pressable`
   position: absolute;
   align-self: center;
   right: 10px;
 `;
+
+export const DeleteIcon = styled(DeleteButtonIcon)``;
