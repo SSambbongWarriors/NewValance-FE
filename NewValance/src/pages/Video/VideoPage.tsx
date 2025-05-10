@@ -6,39 +6,10 @@ import { commentState } from '../../store/videoState';
 import { getVideoData } from '../../api/video';
 import { VideoData } from '../../store/interfaces';
 
-const dummyData = [
-  {
-    id: 1,
-    src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4',
-  },
-  {
-    id: 2,
-    src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-  },
-  {
-    id: 3,
-    src: 'https://download.blender.org/peach/bigbuckbunny_movies/BigBuckBunny_320x180.mp4',
-  },
-  {
-    id: 4,
-    src: 'https://download.blender.org/durian/trailer/sintel_trailer-480p.mp4',
-  },
-  {
-    id: 5,
-    src: 'https://filesamples.com/samples/video/mp4/sample_960x400_ocean_with_audio.mp4',
-  },
-  {
-    id: 6,
-    src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4',
-  },
-  {
-    id: 7,
-    src: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4',
-  },
-];
-
 const VideoPage = ({ route }: any) => {
   const type = route.params?.type || 'recommend';
+  const initialData = route.params?.data;
+  console.log(initialData);
   const [videos, setVideos] = useState<VideoData[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -49,6 +20,7 @@ const VideoPage = ({ route }: any) => {
   const fetchVideoList = async (id: number | null) => {
     if (isFetching) return;
     setIsFetching(true);
+
     try {
       const res = await getVideoData(type, id);
       if (res && res.news) {
@@ -63,6 +35,13 @@ const VideoPage = ({ route }: any) => {
   };
 
   useEffect(() => {
+    if (initialData) {
+      const mappedData = {
+        ...initialData,
+        newsId: initialData.articleId,
+      };
+      setVideos([mappedData]);
+    }
     fetchVideoList(route.params?.newsId);
   }, []);
 
@@ -77,7 +56,7 @@ const VideoPage = ({ route }: any) => {
     <S.Container>
       <S.VideoList
         data={videos}
-        keyExtractor={(item: VideoData) => item.newsId.toString()}
+        keyExtractor={(item: VideoData) => item.newsId?.toString()}
         renderItem={renderVideoItem}
         scrollEnabled={!isCommentActive}
         pagingEnabled={true}
