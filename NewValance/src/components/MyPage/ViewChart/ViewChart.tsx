@@ -6,36 +6,6 @@ import { BarChart } from '../BarChart/BarChart';
 import * as S from './ViewChart.styles';
 import { getWeekViewData } from '../../../api/profile';
 
-// const dummyData = [
-//   [
-//     { date: '2025-01-26', value: 15 },
-//     { date: '2025-01-27', value: 4 },
-//     { date: '2025-01-28', value: 8 },
-//     { date: '2025-01-29', value: 10 },
-//     { date: '2025-01-30', value: 3 },
-//     { date: '2025-01-31', value: 5 },
-//     { date: '2025-02-01', value: 0 },
-//   ],
-//   [
-//     { date: '2025-01-26', value: 10 },
-//     { date: '2025-01-27', value: 4 },
-//     { date: '2025-01-28', value: 8 },
-//     { date: '2025-01-29', value: 10 },
-//     { date: '2025-01-30', value: 3 },
-//     { date: '2025-01-31', value: 5 },
-//     { date: '2025-02-01', value: 0 },
-//   ],
-//   [
-//     { date: '2025-01-26', value: 5 },
-//     { date: '2025-01-27', value: 4 },
-//     { date: '2025-01-28', value: 8 },
-//     { date: '2025-01-29', value: 10 },
-//     { date: '2025-01-30', value: 3 },
-//     { date: '2025-01-31', value: 5 },
-//     { date: '2025-02-01', value: 0 },
-//   ],
-// ];
-
 export interface ViewData {
   date: string;
   value: number;

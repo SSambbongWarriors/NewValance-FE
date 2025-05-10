@@ -50,7 +50,6 @@ const MyPage = () => {
           });
           setUserKeywords(res.preferredKeywords);
         }
-        console.log(res);
       } catch (error) {
         console.error(error);
       }

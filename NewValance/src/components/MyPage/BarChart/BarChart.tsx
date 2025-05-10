@@ -43,7 +43,6 @@ export const BarChart = ({ data }: ChartProps) => {
 
   useEffect(() => {
     const calculateData = () => {
-      console.log(data);
       const newChartData = data.map((pageData, index) => {
         const standard = Math.max(
           ...pageData.reverse().map((singleData) => singleData.value)

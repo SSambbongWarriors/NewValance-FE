@@ -46,8 +46,8 @@ export const TagChart = ({
     const weights = coloredData.map((item) => item.weight);
     const minWeight = Math.min(...weights);
     const maxWeight = Math.max(...weights);
-    const minR = 10;
-    const maxR = 65;
+    const minR = 20;
+    const maxR = 50;
 
     const scaleRadius = (weight: number) => {
       if (maxWeight === minWeight) return (minR + maxR) / 2;
