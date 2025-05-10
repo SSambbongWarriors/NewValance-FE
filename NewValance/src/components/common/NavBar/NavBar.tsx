@@ -25,7 +25,9 @@ export const NavBar = () => {
         <S.NavItem onPress={() => navigate.navigate('Home')}>
           {route.name == 'Home' ? <HomeIconActive /> : <HomeIcon />}
         </S.NavItem>
-        <S.NavItem onPress={() => navigate.navigate('Video')}>
+        <S.NavItem
+          onPress={() => navigate.navigate('Video', { type: 'today' })}
+        >
           <TodayIcon />
         </S.NavItem>
         <S.BLANK />
@@ -36,7 +38,9 @@ export const NavBar = () => {
           {route.name == 'My' ? <MyIconActive /> : <MyIcon />}
         </S.NavItem>
       </S.Container>
-      <S.PlayButton onPress={() => navigate.navigate('Video')}>
+      <S.PlayButton
+        onPress={() => navigate.navigate('Video', { type: 'recommend' })}
+      >
         <PlayIcon />
       </S.PlayButton>
     </S.Wrapper>
