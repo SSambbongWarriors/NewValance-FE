@@ -13,17 +13,17 @@ export const themeState = atom({
 
 export const selectedThemeState = atom({
   key: 'selectedThemeState',
-  default: '기본 테마',
-  effects: [
+  default: 0,
+  effects_UNSTABLE: [
     ({ setSelf, onSet }) => {
       AsyncStorage.getItem('selectedTheme').then((savedTheme) => {
         if (savedTheme) {
-          setSelf(savedTheme);
+          setSelf(parseInt(savedTheme));
         }
       });
 
       onSet((newTheme) => {
-        AsyncStorage.setItem('selectedTheme', newTheme);
+        AsyncStorage.setItem('selectedTheme', newTheme.toString());
       });
     },
   ],

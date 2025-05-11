@@ -39,20 +39,25 @@ export const ThemeBox = () => {
       <CustomText font={theme.fonts.reg18}>테마 선택</CustomText>
       <S.ThemeListContainer>
         {themeList.map((item, idx) => (
-          <ThemeComponent key={idx} title={item.title} desc={item.desc} />
+          <ThemeComponent
+            key={idx}
+            idx={idx}
+            title={item.title}
+            desc={item.desc}
+          />
         ))}
       </S.ThemeListContainer>
     </BottomSheet>
   );
 };
 
-const ThemeComponent = ({ title, desc }: themeInfo) => {
+const ThemeComponent = ({ idx, title, desc }: themeInfo & { idx: number }) => {
   const [selectedTheme, setSelectedTheme] = useRecoilState(selectedThemeState);
-  const isActive = title === selectedTheme;
+  const isActive = idx === selectedTheme;
   return (
     <S.ThemeContainer
       $isActive={isActive}
-      onPress={() => setSelectedTheme(title)}
+      onPress={() => setSelectedTheme(idx)}
     >
       <CheckIcon style={{ opacity: isActive ? 1 : 0 }} />
       <S.TextContainer>

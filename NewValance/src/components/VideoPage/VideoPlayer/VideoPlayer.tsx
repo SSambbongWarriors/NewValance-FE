@@ -8,7 +8,11 @@ import { AnimatedIcon } from '../AnimatedIcon';
 import { CommentBox } from '../CommentBox/CommentBox';
 
 import { useRecoilState } from 'recoil';
-import { commentState, themeState } from '../../../store/videoState';
+import {
+  commentState,
+  selectedThemeState,
+  themeState,
+} from '../../../store/videoState';
 import { ThemeBox } from '../ThemeBox/ThemeBox';
 import { useNavigation } from '@react-navigation/native';
 import { Alert, BackHandler, Linking } from 'react-native';
@@ -28,19 +32,27 @@ export const VideoPlayer = ({ data, isPlaying }: VideoPlayerProps) => {
   const [isLiked, setIsLiked] = useState(data.liked);
   const [isCommentActive, setIsCommentActive] = useRecoilState(commentState);
   const [isThemeActive, setIsThemeActive] = useRecoilState(themeState);
+  const [selectedTheme, setSelectedTheme] = useRecoilState(selectedThemeState);
   const [watched, setWatched] = useState<boolean>(false);
+
+  const player1 = useVideoPlayer(data.videoVersions[0].videoUrl, (player1) => {
+    player1.loop = true;
+    player1.timeUpdateEventInterval = 1;
+  });
+  const player2 = useVideoPlayer(data.videoVersions[1].videoUrl, (player2) => {
+    player2.loop = true;
+    player2.timeUpdateEventInterval = 1;
+  });
+  const players = [player1, player2];
+  const [currentPlayer, setCurrentPlayer] = useState(players[selectedTheme]);
 
   const navigate = useNavigation<StackNavigationProp<any>>();
 
-  const player = useVideoPlayer(data.videoVersions[1].videoUrl, (player) => {
-    player.loop = true;
-    player.timeUpdateEventInterval = 1;
-  });
-
   useEffect(() => {
-    const listener = player.addListener('timeUpdate', (event) => {
+    //시청 완료 요청
+    const listener = currentPlayer.addListener('timeUpdate', (event) => {
       const currentTime = event.currentTime;
-      const duration = player.duration;
+      const duration = currentPlayer.duration;
 
       if (duration > 0 && currentTime / duration >= 0.6 && !watched) {
         setWatched(true);
@@ -54,24 +66,30 @@ export const VideoPlayer = ({ data, isPlaying }: VideoPlayerProps) => {
   }, []);
 
   useEffect(() => {
+    //영상 재생 제어
     const shouldPlay = isPlaying && !isPaused;
 
     if (shouldPlay) {
-      player.play();
+      currentPlayer.play();
     } else {
-      player.pause();
+      currentPlayer.pause();
     }
   }, [isPlaying, isPaused]);
 
-  // useEffect(() => {
-  //   if (isPaused) {
-  //     player.pause();
-  //   } else {
-  //     player.play();
-  //   }
-  // }, [isPaused]);
+  useEffect(() => {
+    //테마 변경 제어
+    players.forEach((p) => p.pause());
+
+    const newPlayer = players[selectedTheme];
+    setCurrentPlayer(newPlayer);
+
+    if (isPlaying && !isPaused) {
+      newPlayer.replay();
+    }
+  }, [selectedTheme]);
 
   useEffect(() => {
+    //뒤로가기 제어
     const backAction = () => {
       if (navigate.isFocused()) {
         if (isCommentActive) {
@@ -121,6 +139,7 @@ export const VideoPlayer = ({ data, isPlaying }: VideoPlayerProps) => {
     const supported = await Linking.canOpenURL(url);
     if (supported) {
       await Linking.openURL(url);
+      currentPlayer.pause();
     } else {
       console.log('URL을 열 수 없습니다.');
     }
@@ -129,7 +148,7 @@ export const VideoPlayer = ({ data, isPlaying }: VideoPlayerProps) => {
   return (
     <S.Container>
       <VideoView
-        player={player}
+        player={currentPlayer}
         contentFit="contain"
         nativeControls={false}
         style={{

@@ -2,20 +2,22 @@ import { useCallback, useEffect, useState } from 'react';
 import { VideoPlayer } from '../../components/VideoPage/VideoPlayer/VideoPlayer';
 import * as S from './VideoPage.styles';
 import { useRecoilValue } from 'recoil';
-import { commentState } from '../../store/videoState';
+import { commentState, themeState } from '../../store/videoState';
 import { getVideoData } from '../../api/video';
 import { VideoData } from '../../store/interfaces';
 
 const VideoPage = ({ route }: any) => {
   const type = route.params?.type || 'recommend';
   const initialData = route.params?.data;
-  console.log(initialData);
+
   const [videos, setVideos] = useState<VideoData[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const [nextNewsId, setNextNewsId] = useState<number | null>(null);
   const [isFetching, setIsFetching] = useState(false);
+
   const isCommentActive = useRecoilValue(commentState);
+  const isThemeActive = useRecoilValue(themeState);
 
   const fetchVideoList = async (id: number | null) => {
     if (isFetching) return;
@@ -58,7 +60,7 @@ const VideoPage = ({ route }: any) => {
         data={videos}
         keyExtractor={(item: VideoData) => item.newsId?.toString()}
         renderItem={renderVideoItem}
-        scrollEnabled={!isCommentActive}
+        scrollEnabled={!(isCommentActive || isThemeActive)}
         pagingEnabled={true}
         horizontal
         showsHorizontalScrollIndicator={false}
