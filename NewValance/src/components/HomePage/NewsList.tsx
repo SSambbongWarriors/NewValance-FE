@@ -36,6 +36,8 @@ export const NewsList = () => {
           );
 
           setData(sortedData);
+        } else {
+          setData(newsData);
         }
       } catch (error) {
         console.error(error);
@@ -81,14 +83,12 @@ export const NewsList = () => {
             <ArrowLeft />
           </S.Header>
           <S.NewsContainer
-            horizontal={true}
-            contentContainerStyle={{ gap: 8, paddingRight: 8 }}
-            showsHorizontalScrollIndicator={false}
-            decelerationRate="fast"
-          >
-            {cat.newsList.map((item) => (
+            data={cat.newsList}
+            keyExtractor={(item: NewsData) => item.articleId.toString()}
+            renderItem={({ item }: { item: NewsData }) => (
               <Pressable
                 onPress={() => onPressNews(cat.categoryId, item.articleId)}
+                key={'list-pressable' + item.articleId}
               >
                 <VideoThumbS
                   key={item.articleId}
@@ -99,8 +99,14 @@ export const NewsList = () => {
                   }
                 />
               </Pressable>
-            ))}
-          </S.NewsContainer>
+            )}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            decelerationRate="fast"
+            contentContainerStyle={{ gap: 8, paddingRight: 8 }}
+            windowSize={6}
+          ></S.NewsContainer>
+          <S.Line />
         </S.CategoryContainer>
       ))}
     </S.Container>

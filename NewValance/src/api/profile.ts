@@ -28,7 +28,7 @@ export const patchUserProfile = async (
     formData.append('username', username);
   }
   if (image) {
-    formData.append('profileImg', {
+    formData.append('profileImage', {
       uri: image.uri,
       name: image.fileName ?? 'profile.jpg',
       type: image.mimeType ?? 'image/jpeg',
@@ -36,7 +36,7 @@ export const patchUserProfile = async (
   }
 
   try {
-    const res = await client.patch('/api/profile', formData, {
+    const res = await client.post('/api/profile', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },

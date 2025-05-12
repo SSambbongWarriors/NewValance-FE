@@ -39,6 +39,7 @@ const LandingPage = () => {
         const accessToken = token?.accessToken;
 
         if (accessToken && isTokenValid(accessToken)) {
+          console.log(accessToken);
           setTimeout(() => {
             navigation.replace('Home');
           }, 1000);
