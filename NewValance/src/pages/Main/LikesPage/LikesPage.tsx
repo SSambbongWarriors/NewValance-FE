@@ -42,7 +42,11 @@ const LikesPage = () => {
         <S.Header>
           <CustomText font={theme.fonts.bold24}>내가 좋아요한 뉴스</CustomText>
         </S.Header>
-        <VerticalThumbnailList data={data} handleData={getVideoData} />
+        <VerticalThumbnailList
+          type={'liked'}
+          data={data}
+          handleData={getVideoData}
+        />
       </S.Container>
     </Layout>
   );

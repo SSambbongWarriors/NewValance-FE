@@ -5,13 +5,15 @@ import { useState } from 'react';
 
 interface SearchBarProps {
   setIsSearched: React.Dispatch<React.SetStateAction<boolean>>;
+  handleSearch: (query: string) => Promise<void>;
 }
 
-export const SearchBar = ({ setIsSearched }: SearchBarProps) => {
+export const SearchBar = ({ setIsSearched, handleSearch }: SearchBarProps) => {
   const [searchText, setSearchText] = useState<string>('');
 
   const onPressSearch = () => {
     setIsSearched(true);
+    handleSearch(searchText);
   };
 
   return (

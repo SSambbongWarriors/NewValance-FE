@@ -13,5 +13,6 @@ export const Container = styled(LinearGradient)`
 `;
 
 export const Header = styled.View`
-  padding-bottom: 8px;
+  padding-top: 12px;
+  padding-bottom: 16px;
 `;

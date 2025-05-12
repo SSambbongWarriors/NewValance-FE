@@ -159,14 +159,7 @@ export const VideoPlayer = ({ data, isPlaying }: VideoPlayerProps) => {
       />
       <S.PressableArea onPress={handleVideoPress} />
       <AnimatedIcon isPaused={isPaused} />
-      <S.LeftArrow
-        onPress={() =>
-          navigate.reset({
-            index: 0,
-            routes: [{ name: 'Home' }],
-          })
-        }
-      />
+      <S.LeftArrow onPress={() => navigate.goBack()} />
       <S.Menu onPress={handleThemeActive} />
       <S.IconContainer>
         {isLiked ? (

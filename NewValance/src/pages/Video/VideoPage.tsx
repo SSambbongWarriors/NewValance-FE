@@ -5,6 +5,7 @@ import { useRecoilValue } from 'recoil';
 import { commentState, themeState } from '../../store/videoState';
 import { getVideoData } from '../../api/video';
 import { VideoData } from '../../store/interfaces';
+import { getSearchVideo } from '../../api/search';
 
 const VideoPage = ({ route }: any) => {
   const type = route.params?.type || 'recommend';
@@ -24,7 +25,18 @@ const VideoPage = ({ route }: any) => {
     setIsFetching(true);
 
     try {
-      const res = await getVideoData(type, id);
+      let res;
+      if (type === 'search') {
+        res = await getSearchVideo(id as number);
+      } else {
+        res = await getVideoData(type, id);
+      }
+
+      if (type === 'liked' || type === 'search') {
+        if (res) {
+          setVideos((prev) => [...prev, res]);
+        }
+      }
       if (res && res.news) {
         setVideos((prev) => [...prev, ...res.news]);
         setNextNewsId(res.nextNewsId);
@@ -69,7 +81,6 @@ const VideoPage = ({ route }: any) => {
             event.nativeEvent.contentOffset.x /
               event.nativeEvent.layoutMeasurement.width
           );
-          console.log(newIndex);
           setCurrentIndex(newIndex);
           if (newIndex >= videos.length - 2 && nextNewsId) {
             console.log('영상 추가 요청');
@@ -77,7 +88,7 @@ const VideoPage = ({ route }: any) => {
           }
         }}
         initialNumToRender={2}
-        windowSize={3}
+        windowSize={5}
         maxToRenderPerBatch={2}
         removeClippedSubviews={true}
       />

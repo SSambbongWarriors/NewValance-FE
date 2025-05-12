@@ -5,18 +5,20 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 interface VerticalThumbnailProps {
+  type: string;
   data: NewsData[];
-  handleData: () => Promise<void>;
+  handleData?: () => Promise<void>;
 }
 
 export const VerticalThumbnailList = ({
+  type,
   data,
   handleData,
 }: VerticalThumbnailProps) => {
   const navigate = useNavigation<StackNavigationProp<any>>();
 
   const onPressNews = (id: number) => {
-    navigate.navigate('Video', { type: 'likes', newsId: id });
+    navigate.navigate('Video', { type: type, newsId: id });
   };
 
   return (
@@ -33,7 +35,7 @@ export const VerticalThumbnailList = ({
         </Pressable>
       )}
       numColumns={2}
-      onEndReached={handleData}
+      onEndReached={handleData || null}
     />
   );
 };
