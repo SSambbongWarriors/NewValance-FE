@@ -1,6 +1,9 @@
+import { useNavigation } from '@react-navigation/native';
+import { useUser } from '../../../hooks/useUser';
 import theme from '../../../styles/theme';
 import { CustomText } from '../../common/CustomText';
 import * as S from './Modal.styles';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 interface ModalProps {
   setModalActive: React.Dispatch<
@@ -9,6 +12,14 @@ interface ModalProps {
 }
 
 export const LogoutModal = ({ setModalActive }: ModalProps) => {
+  const { clearUser } = useUser();
+  const navigate = useNavigation<StackNavigationProp<any>>();
+
+  const handleLogout = () => {
+    clearUser();
+    navigate.navigate('Login');
+  };
+
   return (
     <S.Container>
       <CustomText font={theme.fonts.reg20}>로그아웃 하시겠습니까?</CustomText>
@@ -18,7 +29,7 @@ export const LogoutModal = ({ setModalActive }: ModalProps) => {
             취소
           </CustomText>
         </S.Button>
-        <S.Button $color={true}>
+        <S.Button $color={true} onPress={handleLogout}>
           <CustomText font={theme.fonts.bold14} color={theme.colors.white}>
             확인
           </CustomText>
