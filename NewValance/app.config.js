@@ -1,0 +1,78 @@
+import 'dotenv/config';
+
+export default {
+  expo: {
+    name: 'newValance',
+    slug: 'newValance',
+    scheme: 'newvalance',
+    version: '1.0.0',
+    jsEngine: 'hermes',
+    orientation: 'portrait',
+    icon: './assets/icon.png',
+    userInterfaceStyle: 'light',
+    newArchEnabled: true,
+    splash: {
+      image: './assets/splash-icon.png',
+      resizeMode: 'contain',
+      backgroundColor: '#ffffff',
+    },
+    assetBundlePatterns: ['**/*'],
+    ios: {
+      supportsTablet: true,
+    },
+    android: {
+      adaptiveIcon: {
+        foregroundImage: './assets/adaptive-icon.png',
+        backgroundColor: '#ffffff',
+      },
+      permissions: [
+        'android.permission.RECORD_AUDIO',
+        'android.permission.RECORD_AUDIO',
+      ],
+      package: 'com.seoyeon_park.newValance',
+    },
+    web: {
+      favicon: './assets/favicon.png',
+    },
+    plugins: [
+      [
+        'expo-splash-screen',
+        {
+          backgroundColor: '#ffffff',
+          image: './src/assets/images/common/logo.png',
+          imageWidth: 200,
+        },
+      ],
+      [
+        'expo-image-picker',
+        {
+          photosPermission:
+            'The app accesses your photos to let you share them with your friends.',
+        },
+      ],
+      'expo-video',
+      [
+        'expo-secure-store',
+        {
+          configureAndroidBackup: true,
+          faceIDPermission:
+            'Allow $(PRODUCT_NAME) to access your Face ID biometric data.',
+        },
+      ],
+      [
+        'expo-build-properties',
+        {
+          android: {
+            useCleartextTraffic: true,
+          },
+        },
+      ],
+    ],
+    extra: {
+      eas: {
+        projectId: '8b914837-b486-4e3d-be14-a9250b9fdcc7',
+      },
+      apiUrl: process.env.EXPO_PUBLIC_API_URL,
+    },
+  },
+};
