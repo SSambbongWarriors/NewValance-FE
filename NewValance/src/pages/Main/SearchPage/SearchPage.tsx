@@ -11,6 +11,7 @@ import { SearchBar } from '../../../components/SearchPage/SearchBar';
 import { getSearchResult } from '../../../api/search';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { VerticalThumbnailList } from '../../../components/common/VideoList/VerticalThumbnailList';
+import { Pressable } from 'react-native';
 
 export interface SearchResultType {
   [category: string]: NewsData[];
@@ -32,6 +33,11 @@ const SearchPage = () => {
 
     getSearchHistory();
   }, []);
+
+  const deleteSearchHistory = async () => {
+    await AsyncStorage.removeItem('MySearchList');
+    setHistory([]);
+  };
 
   const handleSearch = async (query: string) => {
     try {
@@ -55,6 +61,11 @@ const SearchPage = () => {
             <CustomText font={theme.fonts.bold24} color={theme.colors.white}>
               최근 검색한 뉴스
             </CustomText>
+            <Pressable onPress={deleteSearchHistory}>
+              <CustomText font={theme.fonts.reg12} color={theme.colors.gray_3}>
+                기록 삭제
+              </CustomText>
+            </Pressable>
           </S.Header>
         )}
         {isSearched ? (

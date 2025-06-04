@@ -6,7 +6,6 @@ import { useRecoilState } from 'recoil';
 import { selectedThemeState, themeState } from '../../../store/videoState';
 import * as S from './ThemeBox.styles';
 import CheckIcon from '../../../assets/images/VideoPage/check.svg';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface themeInfo {
   title: string;
@@ -15,12 +14,12 @@ interface themeInfo {
 
 const themeListInfo = [
   {
-    title: '기본 테마',
-    desc: '실제 뉴스 아나운서와 같은 어투',
-  },
-  {
     title: '캐주얼 테마',
     desc: '더 재미있고 가볍게 들을 수 있는 어투',
+  },
+  {
+    title: '기본 테마',
+    desc: '실제 뉴스 아나운서와 같은 어투',
   },
 ];
 

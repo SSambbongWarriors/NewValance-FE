@@ -15,4 +15,7 @@ export const Container = styled(LinearGradient)`
 export const Header = styled.View`
   padding-top: 12px;
   padding-bottom: 16px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-end;
 `;

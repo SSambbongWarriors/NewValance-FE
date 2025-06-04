@@ -32,9 +32,9 @@ const LikesPage = () => {
     }
   };
 
-  useEffect(() => {
-    getVideoData();
-  }, []);
+  // useEffect(() => {
+  //   getVideoData();
+  // }, []);
 
   return (
     <Layout>

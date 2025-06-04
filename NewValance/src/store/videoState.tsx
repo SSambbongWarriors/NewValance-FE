@@ -13,7 +13,7 @@ export const themeState = atom({
 
 export const selectedThemeState = atom({
   key: 'selectedThemeState',
-  default: 0,
+  default: 1,
   effects_UNSTABLE: [
     ({ setSelf, onSet }) => {
       AsyncStorage.getItem('selectedTheme').then((savedTheme) => {

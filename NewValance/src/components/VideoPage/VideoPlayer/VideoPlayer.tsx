@@ -6,7 +6,6 @@ import { CustomText } from '../../common/CustomText';
 import theme from '../../../styles/theme';
 import { AnimatedIcon } from '../AnimatedIcon';
 import { CommentBox } from '../CommentBox/CommentBox';
-
 import { useRecoilState } from 'recoil';
 import {
   commentState,
@@ -15,11 +14,10 @@ import {
 } from '../../../store/videoState';
 import { ThemeBox } from '../ThemeBox/ThemeBox';
 import { useNavigation } from '@react-navigation/native';
-import { Alert, BackHandler, Linking } from 'react-native';
+import { BackHandler, Linking } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { VideoData } from '../../../store/interfaces';
 import { postVideoComplete } from '../../../api/video';
-import { useEvent } from 'expo';
 import { postLike } from '../../../api/interaction';
 
 interface VideoPlayerProps {
@@ -168,7 +166,7 @@ export const VideoPlayer = ({ data, isPlaying }: VideoPlayerProps) => {
           <S.Heart onPress={handleLiked} />
         )}
         <S.Chat onPress={handleCommentActive} />
-        <S.Share />
+        {/* <S.Share /> */}
       </S.IconContainer>
       <S.InfoContainer>
         <S.Title>
