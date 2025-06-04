@@ -1,14 +1,17 @@
-import { Pressable } from 'react-native';
+import { Alert, Pressable } from 'react-native';
 import { CustomText } from '../../../components/common/CustomText';
 import theme from '../../../styles/theme';
 import * as S from './LoginPage.styles';
 import { ImageBackground } from 'react-native';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import Layout from '../../Layout';
+import { useEffect } from 'react';
 
 const LoginPage = () => {
   const navigate = useNavigation<NavigationProp<any>>(); //로그인 구현 전 임시 네비게이션
-
+  useEffect(() => {
+    Alert.alert(`${process.env.EXPO_PUBLIC_API_URL}`);
+  }, []);
   return (
     <Layout>
       <ImageBackground
@@ -52,8 +55,7 @@ const LoginPage = () => {
             </Pressable>
             <Pressable
               onPress={() =>
-                //navigate.navigate('LoginWebView', { type: 'google' })
-                navigate.navigate('SignIn')
+                navigate.navigate('LoginWebView', { type: 'google' })
               } /*구글 로그인 버튼*/
             >
               <S.CircleButton
