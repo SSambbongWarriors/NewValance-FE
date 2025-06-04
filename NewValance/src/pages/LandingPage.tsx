@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { Image, ImageBackground, View } from 'react-native';
 import SplashLogo from '../assets/images/common/splash-icon.svg';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as SecureStore from 'expo-secure-store';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 const LandingPage = () => {
@@ -28,7 +29,8 @@ const LandingPage = () => {
   useEffect(() => {
     const checkToken = async () => {
       try {
-        const rawToken = await AsyncStorage.getItem('token');
+        //const rawToken = await AsyncStorage.getItem('token');
+        const rawToken = await SecureStore.getItemAsync('token');
         if (!rawToken) {
           setTimeout(() => {
             navigation.replace('Login');

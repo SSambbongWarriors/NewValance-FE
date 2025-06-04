@@ -4,6 +4,7 @@ import { WebView, WebViewMessageEvent } from 'react-native-webview';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as SecureStore from 'expo-secure-store';
 import { CustomText } from '../../components/common/CustomText';
 import theme from '../../styles/theme';
 import { useUser } from '../../hooks/useUser';
@@ -16,7 +17,7 @@ type User = {
   username: string;
 };
 
-type KakaoAuthResponse = {
+type AuthResponse = {
   access_token: string;
   refresh_token: string;
   expiresIn: number;
@@ -30,29 +31,22 @@ const LoginWebViewPage = ({ route }: any) => {
   const type = route.params.type;
   const navigate = useNavigation<StackNavigationProp<any>>();
   const [isParsed, setIsParsed] = useState<boolean>(false);
-  const KAKAO_REDIRECT_URL = `${process.env.EXPO_PUBLIC_API_URL}/login/oauth2/code/kakao`;
-  const injectedJavaScript = `
-  (function() {
-    if (window.location.href.includes("${KAKAO_REDIRECT_URL}")) {
-      window.ReactNativeWebView.postMessage(document.body.innerText);
-    }
-  })();
-  `;
 
-  const getAccessToken = async (event: WebViewMessageEvent) => {
+  const AUTH_URL = `${process.env.EXPO_PUBLIC_API_URL}/api/login/${type}`;
+
+  const handleMessage = async (event: WebViewMessageEvent) => {
     try {
-      const data: KakaoAuthResponse = JSON.parse(event.nativeEvent.data);
+      const data: AuthResponse = JSON.parse(event.nativeEvent.data);
       if (data) {
         setIsParsed(true);
         const token = {
           accessToken: data.access_token,
           refreshToken: data.refresh_token,
-          grantType: data.grantType,
-          expiresIn: data.expiresIn,
         };
 
         console.log(token);
-        await AsyncStorage.setItem('token', JSON.stringify(token));
+        //await AsyncStorage.setItem('token', JSON.stringify(token));
+        await SecureStore.setItemAsync('token', JSON.stringify(token));
         console.log('토큰 저장');
 
         const newUser: UserType = {
@@ -84,10 +78,9 @@ const LoginWebViewPage = ({ route }: any) => {
           originWhitelist={['*']}
           scalesPageToFit={false}
           source={{
-            uri: `${process.env.EXPO_PUBLIC_API_URL}/oauth2/authorization/${type}`,
+            uri: AUTH_URL,
           }}
-          injectedJavaScript={injectedJavaScript}
-          onMessage={getAccessToken}
+          onMessage={handleMessage}
           onError={(e) => console.log('WebView error:', e.nativeEvent)}
         />
       ) : (

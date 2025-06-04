@@ -1,4 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as SecureStore from 'expo-secure-store';
 import { client } from './client';
 import axios from 'axios';
 
@@ -35,5 +36,21 @@ export const signIn = async ({ username, tags }: SignInProps) => {
     return res;
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const postRefreshToken = async () => {
+  try {
+    //const tokenString = await AsyncStorage.getItem('token');
+    const tokenString = await SecureStore.getItemAsync('token');
+    if (tokenString) {
+      const token = JSON.parse(tokenString);
+      const res = await client.post(`/api/auth/refresh`, {
+        refresh_token: token.refreshToken,
+      });
+      return res.data;
+    }
+  } catch (error) {
+    console.error();
   }
 };
