@@ -1,3 +1,6 @@
+
+![캡스톤디자인과창업프로젝트_page-0001](https://github.com/user-attachments/assets/ca0c3460-7440-4e12-bb24-fa12a4531f4f)
+
 ## 🎬 Service Overview
 `NewValance`는 긴 글의 뉴스를 읽을 여유가 없는 현대인들이 빠르고 간편하게 사회 이슈를 습득할 수 있도록 **뉴스 숏폼 영상**을 제공하는 서비스입니다. 뉴스 숏폼 영상은 다음 과정을 거쳐 생성됩니다:
 1. 뉴스 사이트에서 기사 크롤링  
