@@ -25,3 +25,9 @@ npx expo start
 ```bash
 EXPO_PUBLIC_API_URL=your_api_url_here
 ```
+
+### 5. 프로덕션 빌드
+
+```
+eas build --platform android --profile production
+```
